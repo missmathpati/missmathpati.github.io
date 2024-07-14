@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <title>Akanksha Mathpati</title>
+    <style>
+        :root {
+    --primary-color: orange;
+    --gradient-color: linear-gradient(180deg, #d2ff00 0%, #00d2ff 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Space Grotesk", sans-serif;
+    background-color: #000000;
+}
+
+.typewriter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1.type {
+    color: orange;
+    background: -webkit-linear-gradient(25deg, #eee, #333);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 3rem;
+    font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid;
+    animation: type 1.5s steps(90) 1.5s 1 normal both, cursor 1s step-end infinite;
+    position: relative;
+}
+
+@keyframes type {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes cursor {
+    50% {
+        border-color: transparent;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<div class="typewriter-container">
+    <div class="typewriter">
+        <h1 class="type">Akanksha Mathpati</h1>
+    </div>
+</div>
+
+<div class="container hero-image" id="main-content" style="display: none;">
+    <div class="hero-image-overlay">
+        <nav>
+            <h1>Akanksha Mathpati</h1>
+            <span class="chevron">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve" width="24" height="24" class="hovered-paths">
+                    <g>
+                        <g>
+                            <g>
+                                <polygon points="225.813,48.907 128,146.72 30.187,48.907 0,79.093 128,207.093 256,79.093" data-original="#000000" class="hovered-path active-path" style="fill:#FFFFFF" data-old_color="#000000"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </span>
+            <ul class="main">
+                <li>
+                    <a href="About.html">About</a>
+                </li>
+                <li>
+                    <a href="#">Experience</a>
+                    <ul class="sub-menu">
+                        <li>
+                           
+                        </li> <a href="Resumes/Akanksha Mathpati Resume.pdf" download>Download CV</a>
+                        <li>
+                            <a href="skills.html">Background</a>
+                        </li>
+                        <li>
+                            <a href="projects.html">View Projects</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="contact.html">Contact Me!</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Check if it's the first time loading the page
+        var isFirstLoad = sessionStorage.getItem('isFirstLoad');
+        
+        if (!isFirstLoad) {
+            // Show typewriter animation for 3 seconds (adjust timing as needed)
+            setTimeout(function() {
+                document.querySelector(".typewriter-container").style.display = 'none';
+                document.getElementById("main-content").style.display = 'block';
+            }, 3000); // Duration of the typewriter animation (1.5s typing + 1.5s delay)
+
+            // Set session storage to indicate first load
+            sessionStorage.setItem('isFirstLoad', true);
+        } else {
+            // If not the first load, directly show the main content
+            document.querySelector(".typewriter-container").style.display = 'none';
+            document.getElementById("main-content").style.display = 'block';
+        }
+    });
+</script>
+<!--
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(function() {
+            document.querySelector(".typewriter-container").style.display = 'none';
+            document.getElementById("main-content").style.display = 'block';
+        }, 3000); // Duration of the typewriter animation (1.5s typing + 1.5s delay)
+    });
+</script>-->
+
+</body>
+</html>
