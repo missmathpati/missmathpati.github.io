@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: black;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .content {
+      text-align: justify;
+      margin: 0 20%;
+      color: white;
+    }
+    h1 {
+      color: orange;
+      text-align: center;
+      text-decoration: underline;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+      color: orange;
+      background-color: black;
+      border: 2px solid orange;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .button:hover {
+      background-color: orange;
+      color: black;
+    }
+
+    .button + .button {
+      margin-left: 10px; /* Adjust this value for the desired gap */
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>About.</h1>
+    <p>
+      Hello,    <span style="font-size: 2em; color: orange; font-family: 'Satisfy', cursive;">Akanksha Mathpati</span>  here! grad student at University of Chicago, Illinois.<br> <br>
+      I am aspiring Data Science Consultant driven by hard work, discipline, and honesty. As a passionate learner, I am eager to tackle 
+      challenges and deliver impactful solutions. Strong organizational abilities with proven successes managing multiple academic 
+      projects and volunteering events. As an avid reader and traveler, I love exploring new cultures and gaining diverse perspectives. 
+      Well-rounded and professional team player with excellent communication skills. I believe in continuous 
+      learning and growth, and I am confident that my communication, presentation, and analytical skills will enable me to excel in any role.
+    </p>
+    <div class="buttons">
+      <a href="https://github.com/missmathpati" class="button">View GitHub</a>
+      <a href="Akanksha Mathpati Resume.pdf" download class="button">Download CV</a>
+    </div>
+  </div>
+</body>
+</html>
