@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About</title>
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Fira+Mono' rel='stylesheet'>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
     body {
@@ -15,57 +16,366 @@
       margin: 0;
       background-color: black;
       font-family: 'Montserrat', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Animated background particles */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 165, 0, 0.06) 0%, transparent 50%);
+      animation: float 25s ease-in-out infinite;
+      z-index: 0;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-15px) rotate(0.5deg); }
+      66% { transform: translateY(8px) rotate(-0.5deg); }
+    }
+    /* Animated SVG network background */
+    .network-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.13;
+      animation: moveNetwork 30s linear infinite alternate;
+    }
+    @keyframes moveNetwork {
+      0% { transform: scale(1) translateY(0); }
+      100% { transform: scale(1.05) translateY(-20px); }
+    }
+    /* Floating particles effect */
+    .particles {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .particle {
+      position: absolute;
+      width: 2px; height: 2px;
+      background-color: rgba(255, 165, 0, 0.3);
+      border-radius: 50%;
+      animation: float-particle 15s linear infinite;
+    }
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+    .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 40%; animation-delay: 6s; }
+    .particle:nth-child(5) { left: 50%; animation-delay: 8s; }
+    .particle:nth-child(6) { left: 60%; animation-delay: 10s; }
+    .particle:nth-child(7) { left: 70%; animation-delay: 12s; }
+    .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+    @keyframes float-particle {
+      0% { top: 100%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: -10px; opacity: 0; }
     }
     .content {
       text-align: justify;
       margin: 0 20%;
       color: white;
+      animation: fadeInUp 1s ease-out;
+      z-index: 2;
+      position: relative;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Terminal style intro */
+    .terminal {
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      background: rgba(20,20,20,0.85);
+      color: #00ffae;
+      padding: 18px 24px;
+      border-radius: 8px;
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
+      border-left: 4px solid orange;
+      position: relative;
+      overflow-x: auto;
+      white-space: pre-line;
+      letter-spacing: 0.5px;
+    }
+    .terminal .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ffae;
+      margin-left: 2px;
+      animation: blink 1s steps(2, start) infinite;
+      height: 1.1em;
+      vertical-align: middle;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
     h1 {
       color: orange;
       text-align: center;
       text-decoration: underline;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px rgba(255, 165, 0, 0.5); }
+      to { text-shadow: 0 0 20px rgba(255, 165, 0, 0.8); }
     }
     .buttons {
       display: flex;
       justify-content: center;
       margin-top: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
     }
+    
     .button {
       display: inline-block;
-      margin-top: 15px;
       text-decoration: none;
-      color: orange;
-      background-color: black;
-      border: 2px solid orange;
+      color: #00ffae;
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00ffae;
+      padding: 12px 20px;
+      border-radius: 0;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 0.9em;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-width: 140px;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(0, 255, 174, 0.1);
+    }
+    
+    .button.cv-button {
+      display: inline-block;
       padding: 10px 20px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      border: 2px solid orange;
+      background: linear-gradient(145deg, transparent, rgba(255, 165, 0, 0.1));
+      color: orange;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 0.9em;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: none;
+      min-width: 140px;
     }
+    
+    .button.cv-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .button.cv-button:hover {
+      background: linear-gradient(145deg, orange, #ff8c00) !important;
+      color: black !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3) !important;
+      border-color: orange !important;
+    }
+    
+    .button.cv-button:hover::before {
+      left: 100% !important;
+    }
+    
     .button:hover {
-      background-color: orange;
+      background-color: #00ffae;
       color: black;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 255, 174, 0.4);
+      border-color: #00ffae;
     }
-
-    .button + .button {
-      margin-left: 10px; /* Adjust this value for the desired gap */
+    
+    .button:hover::before {
+      left: 100%;
+    }
+    
+    .button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 10px rgba(0, 255, 174, 0.3);
+    }
+    
+    .icon-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 120px;
+    }
+    
+    .icon-button img {
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+    
+    .icon-button:hover img {
+      opacity: 1;
+    }
+    
+    /* Tech stack row */
+    .tech-stack {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      margin: 38px 0 18px 0;
+      flex-wrap: wrap;
+      opacity: 0.92;
+    }
+    .tech-stack .tech {
+      display: flex;
+      align-items: center;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      color: #ffb347;
+      font-size: 1.1em;
+      background: rgba(30,30,30,0.7);
+      border-radius: 6px;
+      padding: 6px 16px 6px 10px;
+      box-shadow: 0 1px 6px 0 rgba(0,0,0,0.10);
+      border: 1px solid #222;
+      transition: background 0.3s;
+      margin-bottom: 4px;
+    }
+    .tech-stack .tech:hover {
+      background: rgba(255, 165, 0, 0.13);
+      color: orange;
+    }
+    .tech-stack .icon {
+      width: 22px;
+      height: 22px;
+      margin-right: 8px;
+      filter: grayscale(0.2) brightness(1.2);
+      vertical-align: middle;
+    }
+    @media (max-width: 900px) {
+      .content { margin: 0 5%; }
+    }
+    @media (max-width: 600px) {
+      .content { margin: 0 2%; }
+      .tech-stack { gap: 10px; }
+      .tech-stack .tech { font-size: 0.95em; padding: 5px 10px 5px 7px; }
+    }
+    .current-roles {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      margin: 18px 0 30px 0;
+      padding-left: 10px;
+      border-left: 3px solid orange;
+      background: rgba(20,20,20,0.7);
+      box-shadow: 0 2px 12px 0 rgba(255,165,0,0.04);
+      max-width: 900px;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      font-size: 1.08em;
+      color: #ffb347;
+      gap: 7px;
+      animation: fadeInUp 1.2s 0.2s both;
+    }
+    .current-roles .role {
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    .current-roles .role-title {
+      color: #00ffae;
+      font-weight: 600;
+    }
+    .current-roles .company {
+      color: #ffb347;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow-x: auto;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+    @media (max-width: 600px) {
+      .current-roles { font-size: 0.97em; max-width: 100%; padding-left: 5px; }
     }
   </style>
 </head>
 <body>
+  <!-- SVG Network Background -->
+  <svg class="network-bg" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="2" fill="#ffb347"/>
+    <circle cx="300" cy="200" r="2" fill="#ffb347"/>
+    <circle cx="500" cy="120" r="2" fill="#ffb347"/>
+    <circle cx="700" cy="300" r="2" fill="#ffb347"/>
+    <circle cx="200" cy="400" r="2" fill="#ffb347"/>
+    <circle cx="600" cy="500" r="2" fill="#ffb347"/>
+    <circle cx="800" cy="200" r="2" fill="#ffb347"/>
+    <line x1="100" y1="100" x2="300" y2="200" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="300" y1="200" x2="500" y2="120" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="500" y1="120" x2="700" y2="300" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="700" y1="300" x2="800" y2="200" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="200" y1="400" x2="600" y2="500" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="600" y1="500" x2="700" y2="300" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="200" y1="400" x2="100" y2="100" stroke="#ffb347" stroke-width="0.7"/>
+  </svg>
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
   <div class="content">
     <h1>About.</h1>
+    <div class="terminal">
+      &gt; Akanksha Mathpati <br>
+      &gt; Data Science | AI/ML Engineer <span class="cursor"></span>
+    </div>
+    <div class="current-roles">
+      <div class="role">
+        <span class="role-title">Machine Learning Engineer</span> @ <span class="company">Blue AI Labs</span>
+      </div>
+      <div class="role">
+        <span class="role-title">AI/ML Engineer</span> @ <span class="company">FA ITS - Chief Technology Office, University of Chicago</span>
+      </div>
+    </div>
     <p>
-      Hello,    <span style="font-size: 2em; color: orange; font-family: 'Satisfy', cursive;">Akanksha Mathpati</span>  here! grad student at University of Chicago, Illinois.<br> <br>
-      I am aspiring Data Science Consultant driven by hard work, discipline, and honesty. As a passionate learner, I am eager to tackle 
+      I am an aspiring Data Science Consultant driven by hard work, discipline, and honesty. As a passionate learner, I am eager to tackle 
       challenges and deliver impactful solutions. Strong organizational abilities with proven successes managing multiple academic 
       projects and volunteering events. As an avid reader and traveler, I love exploring new cultures and gaining diverse perspectives. 
       Well-rounded and professional team player with excellent communication skills. I believe in continuous 
       learning and growth, and I am confident that my communication, presentation, and analytical skills will enable me to excel in any role.
     </p>
     <div class="buttons">
-      <a href="https://github.com/missmathpati" class="button">View GitHub</a>
-      <a href="Akanksha Mathpati Resume .pdf" download class="button">Download CV</a>
+      <a href="https://github.com/missmathpati" class="button icon-button">View GitHub</a>
+      <a href="https://www.linkedin.com/in/akanksha-a-mathpati/" class="button icon-button">View LinkedIn</a>
+      <a href="Resumes/Akanksha Mathpati Resume .pdf" download class="button cv-button">Download CV</a>
     </div>
   </div>
 </body>
