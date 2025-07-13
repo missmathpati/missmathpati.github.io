@@ -1,221 +1,479 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Projects</title>
+  <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Fira+Mono' rel='stylesheet'>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      background-color: black;
-      font-family: 'Montserrat', sans-serif; /* Using Montserrat font */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      box-sizing: border-box;
     }
 
-    .project-section {
-      width: 80%;
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
       position: relative;
     }
 
-    .project-carousel {
-      display: flex;
-      overflow-x: hidden;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      margin-bottom: 20px;
+    /* Animated background particles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 165, 0, 0.06) 0%, transparent 50%);
+      animation: float 25s ease-in-out infinite;
+      z-index: -2;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-15px) rotate(0.5deg); }
+      66% { transform: translateY(8px) rotate(-0.5deg); }
+    }
+
+    /* Animated SVG network background */
+    .network-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.13;
+      animation: moveNetwork 30s linear infinite alternate;
+    }
+
+    @keyframes moveNetwork {
+      0% { transform: scale(1) translateY(0); }
+      100% { transform: scale(1.05) translateY(-20px); }
+    }
+
+    /* Floating particles effect */
+    .particles {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px; height: 2px;
+      background-color: rgba(255, 165, 0, 0.3);
+      border-radius: 50%;
+      animation: float-particle 15s linear infinite;
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+    .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 40%; animation-delay: 6s; }
+    .particle:nth-child(5) { left: 50%; animation-delay: 8s; }
+    .particle:nth-child(6) { left: 60%; animation-delay: 10s; }
+    .particle:nth-child(7) { left: 70%; animation-delay: 12s; }
+    .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+
+    @keyframes float-particle {
+      0% { top: 100%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: -10px; opacity: 0; }
+    }
+
+    .projects-section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 50px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      font-family: 'Inter', sans-serif;
+      color: #ff8c00;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+      animation: glow 2s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px rgba(255, 165, 0, 0.5); }
+      to { text-shadow: 0 0 20px rgba(255, 165, 0, 0.8); }
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffae, #ff8c00);
+      border-radius: 2px;
+    }
+
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      animation: fadeInUp 1s 0.2s both;
     }
 
     .project-card {
-      flex: 0 0 auto;
-      width: calc(100% / 4);
-      margin-right: 20px;
-      scroll-snap-align: start;
-      background-color: black;
-      border: 1px solid lightgrey;
-      padding: 20px;
-      text-align: center;
-      color: white;
-      border-radius: 15px;
-      transition: box-shadow 0.3s ease;
+      background: rgba(20, 20, 20, 0.85);
+      border: 1px solid rgba(0, 255, 174, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
+      display: flex;
+      flex-direction: column;
+      height: 520px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, #00ffae, #ff8c00);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .project-card:hover {
-      box-shadow: 0 0 20px orange;
+      transform: translateY(-8px);
+      background: rgba(30, 30, 30, 0.9);
+      border-color: rgba(0, 255, 174, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 255, 174, 0.2);
     }
 
-
-    
+    .project-card:hover::before {
+      opacity: 1;
+    }
 
     .project-card img {
       width: 100%;
-      height: auto;
-      border-radius: 10px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      margin-bottom: 1rem;
     }
 
-    .project-card h2 {
-      font-size: 24px;
-      color: orange;
-      margin-top: 10px;
-      
+    .project-card:hover img {
+      transform: scale(1.02);
+    }
+
+    .card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .project-card h3 {
+      font-size: 1.2rem;
+      margin: 0 0 1rem 0;
+      color: #ff8c00;
+      line-height: 1.3;
+      min-height: 2.6em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-weight: 600;
+      font-family: 'Fira Mono', 'Consolas', monospace;
     }
 
     .project-card p {
-      font-size: 13px;
-      color: white;
-      text-align: justify;
+      font-size: 0.9rem;
+      color: #ccc;
+      line-height: 1.5;
+      max-height: 9em;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      flex: 1;
+      min-height: 6em;
     }
 
-    .github-link {
+    .project-card p::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .project-card p::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #00ffae, #ff8c00);
+      border-radius: 2px;
+    }
+
+    .project-card p::-webkit-scrollbar-track {
+      background-color: rgba(0, 255, 174, 0.1);
+      border-radius: 2px;
+    }
+
+    .tech-tags {
+      margin-top: auto;
+      margin-bottom: 1rem;
+      color: #00ffae;
+      font-size: 0.8rem;
+      font-weight: 500;
+      line-height: 1.3;
+      min-height: 1.3em;
+      opacity: 0.9;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+    }
+
+    .tech-tags span {
+      display: inline;
+    }
+
+    .tech-tags span:not(:last-child)::after {
+      content: ", ";
+    }
+
+    .btn {
       display: inline-block;
-      margin-top: 15px;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid #00ffae;
+      background: rgba(0, 255, 174, 0.1);
+      color: #00ffae;
+      border-radius: 6px;
       text-decoration: none;
-      color: orange;
-      background-color: black;
-      border: 2px solid orange;
-      padding: 10px 20px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .github-link:hover {
-      background-color: orange;
-      color: black;
-    }
-
-    .projects-heading {
+      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 0.85rem;
       text-align: center;
-      color: orange;
-      font-size: 28px;
-      margin-bottom: 20px;
-      text-decoration: underline;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .navigation-arrows {
+    .btn::before {
+      content: '';
       position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      justify-content: space-between;
-      width: 80px;
-      bottom: -40px;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
     }
 
-    .arrow-link {
-      text-decoration: none;
-      color: orange;
-      background-color: black;
-      border: 2px solid orange;
-      padding: 10px;
-      border-radius: 50%;
-      transition: background-color 0.3s ease, color 0.3s ease;
+    .btn:hover {
+      background: #00ffae;
+      color: #000000;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 174, 0.3);
+      border-color: #00ffae;
     }
 
-    .arrow-link:hover {
-      background-color: orange;
-      color: black;
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .projects-section {
+        padding: 2rem 1rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .projects-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .project-card {
+        height: auto;
+        min-height: 400px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="project-section">
-    <h1 class="projects-heading">My Projects</h1>
-    <div class="project-carousel">
-      <div class="project-card">
-        <img src="images/DIL 2.jpg" alt="Data Insights Lab">
-        <h2>Data Insights Lab</h2>
-        <p> Cutting-edge web application that revolutionizes data analysis by providing a user-friendly platform for gaining valuable insights from datasets. Users can effortlessly upload datasets and 
-          perform machine learning tasks such as data pre-processing, classification, regression, and clustering without extensive coding skills.
-        </p>
-        <a href="#" class="github-link">Soon on GitHub</a>
-      </div>
-      <div class="project-card">
-        <img src="images/MedsXplore.jpg" alt="MedsXplore">
-        <h2>MedsXplore</h2>
-        <p>Copyrighted project "MedsXplore" is a sophisticated and user-friendly web interface designed to empower individuals with comprehensive medication information. Users can easily scan and upload 
-          images of their medications, whether pills, strips, or syrups, to quickly access details like the medication's purpose, potential side effects, etc. </p>
-        <a href="https://github.com/missmathpati/MedsXplore" class="github-link">View on GitHub</a>
-      </div>
-      <div class="project-card">
-        <img src="images/LawGPT.jpg" alt="Law GPT">
-        <h2>Law GPT</h2>
-        <p>Web interface and app designed to provide users with instant access to information regarding Indian laws and regulations. Our AI-driven system ensures that users receive simplified explanations in plain language, 
-          making legal concepts easily understandable. With multilingual support and  voice assistance. </p>
-        <!--<a href="https://github.com/missmathpati/LawGPT" class="github-link">View on GitHub</a>-->
-        <a href="https://www.youtube.com/watch?v=eb-4um2SOgc" class="github-link">View Project</a>
-      </div>
-      <div class="project-card">
-        <img src="images/Cyberbullying.jpg" alt="Cyberbullying Amplification">
-        <h3 style="color: orange";> Cyberbullying Amplification</h3>
-        <p>A research paper published on IEEE Xplore, indexed in Scopus, titled "Dynamics of Cyberbullying on Twitter: ML Detection Models and the Catalytic Role of Tweet Engagement Metrics." 
-          Explores machine learning models for detecting cyberbullying on Twitter and effect of engagement metrics in spread of cyberbullying..
-        </p>
-        <a href="https://ieeexplore.ieee.org/document/10463218" class="github-link">View Paper</a>
-      </div>
-      <div class="project-card">
-        <img src="images/Smart AI CHat.jpg" alt="Smart AI Chat">
-        <h2>Smart AI Chat</h2>
-        <p>Smart AI Chat is a user-friendly web interface that facilitates the seamless upload of CSV and PDF files for streamlined question answering. This intuitive platform allows users to quickly and easily get answers from their documents, enhancing efficiency and productivity in handling data queries. <br>Uplod>ask>get answers></p>
-        <a href="#" class="github-link">View on GitHub</a>
-      </div>
-      <!-- Repeat similar structure for other projects -->
-    </div>
-    <div class="navigation-arrows">
-      <a href="#" class="arrow-link" id="prev-arrow"><i class="fas fa-chevron-left"></i></a>
-      <a href="#" class="arrow-link" id="next-arrow"><i class="fas fa-chevron-right"></i></a>
-    </div>
+  <!-- SVG Network Background -->
+  <svg class="network-bg" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="2" fill="#ffb347"/>
+    <circle cx="300" cy="200" r="2" fill="#ffb347"/>
+    <circle cx="500" cy="120" r="2" fill="#ffb347"/>
+    <circle cx="700" cy="300" r="2" fill="#ffb347"/>
+    <circle cx="200" cy="400" r="2" fill="#ffb347"/>
+    <circle cx="600" cy="500" r="2" fill="#ffb347"/>
+    <circle cx="800" cy="200" r="2" fill="#ffb347"/>
+    <line x1="100" y1="100" x2="300" y2="200" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="300" y1="200" x2="500" y2="120" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="500" y1="120" x2="700" y2="300" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="700" y1="300" x2="800" y2="200" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="200" y1="400" x2="600" y2="500" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="600" y1="500" x2="700" y2="300" stroke="#ffb347" stroke-width="0.7"/>
+    <line x1="200" y1="400" x2="100" y2="100" stroke="#ffb347" stroke-width="0.7"/>
+  </svg>
+
+  <!-- Floating particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const carousel = document.querySelector('.project-carousel');
-      const projects = document.querySelectorAll('.project-card');
-      const prevArrow = document.getElementById('prev-arrow');
-      const nextArrow = document.getElementById('next-arrow');
+  <section class="projects-section">
+    <h1 class="section-title">Projects</h1>
+    <div class="projects-container">
 
-      let currentIndex = 0;
-      const totalProjects = projects.length;
-      const scrollWidth = carousel.scrollWidth;
+      <!-- Card 1 -->
+      <div class="project-card">
+        <img src="images/stack.png" alt="Stackoverflow NLP Analysis">
+        <div class="card-content">
+          <h3>Stackoverflow NLP Analysis</h3>
+          <p>Processed 30 GB of StackOverflow posts using PySpark NLP and Spark ML. Achieved 95%+ accuracy across 50 logistic regression models to uncover user trends and engagement patterns.</p>
+          <div class="tech-tags">
+            <span>Feature Engineering</span><span>Spark ML</span><span>Spark NLP</span><span>EDA</span><span>Big Data</span><span>Visualization</span><span>GCP</span>
+          </div>
+        </div>
+        <a href="#" class="btn">View On GitHub</a>
+      </div>
 
-      // Function to move carousel to next project
-      function moveToNextProject() {
-        currentIndex++;
-        if (currentIndex >= totalProjects) {
-          currentIndex = 0;
-        }
-        const newPosition = projects[currentIndex].offsetLeft;
-        carousel.scrollTo({
-          left: newPosition,
-          behavior: 'smooth'
-        });
-      }
+      <!-- Card 2 -->
+      <div class="project-card">
+        <img src="images/NLP.png" alt="AI Industry Transformation">
+        <div class="card-content">
+          <h3>AI Industry Transformation</h3>
+          <p>Performed NLP on 200K+ AI-related articles from Goldman Sachs data to uncover AI impact across industries, tracking trends, risks, and adoption success stories.</p>
+          <div class="tech-tags">
+            <span>NLP</span><span>Topic Modeling</span><span>BERT</span><span>EDA</span><span>Data Analysis</span><span>Visualization</span>
+          </div>
+        </div>
+        <a href="#" class="btn">View On GitHub</a>
+      </div>
 
-      // Function to move carousel to previous project
-      function moveToPrevProject() {
-        currentIndex--;
-        if (currentIndex < 0) {
-          currentIndex = totalProjects - 1;
-        }
-        const newPosition = projects[currentIndex].offsetLeft;
-        carousel.scrollTo({
-          left: newPosition,
-          behavior: 'smooth'
-        });
-      }
+      <!-- Card 3 -->
+      <div class="project-card">
+        <img src="images/ntp.jpg" alt="Network Traffic Patterns">
+        <div class="card-content">
+          <h3>Network Traffic Patterns</h3>
+          <p>Applied supervised and unsupervised ML (e.g., Isolation Forest) to detect malicious vs. benign network traffic and identify anomalous behavior in cybersecurity data.</p>
+          <div class="tech-tags">
+            <span>Feature Engineering</span><span>ML</span><span>Anomaly Detection</span><span>EDA</span><span>Data Analysis</span><span>Visualization</span>
+          </div>
+        </div>
+        <a href="#" class="btn">View On GitHub</a>
+      </div>
 
-      // Automatically move to next project every 5 seconds
-      setInterval(moveToNextProject, 5000);
+      <!-- Card 4 -->
+      <div class="project-card">
+        <img src="images/Job.jpg" alt="Job Recommendation System">
+        <div class="card-content">
+          <h3>Job Recommendation System</h3>
+          <p>Developed a job-resume matching engine using factorization-based recommendation models. Matches top candidates to jobs and vice versa with high accuracy.</p>
+          <div class="tech-tags">
+            <span>Recommender</span><span>NLP</span><span>ML</span><span>Factorization</span><span>Streamlit</span><span>Visualization</span>
+          </div>
+        </div>
+        <a href="#" class="btn">View On GitHub</a>
+      </div>
 
-      // Event listeners for arrow navigation
-      nextArrow.addEventListener('click', moveToNextProject);
-      prevArrow.addEventListener('click', moveToPrevProject);
-    });
-  </script>
+      <!-- Card 6 -->
+      <div class="project-card">
+        <img src="images/DIL.jpg" alt="Data Insights Lab">
+        <div class="card-content">
+          <h3>Data Insights Lab</h3>
+          <p>Web app that lets users perform machine learning tasks like preprocessing, classification, regression, and clustering without writing code.</p>
+          <div class="tech-tags">
+            <span>Python</span><span>Flask</span><span>ML</span><span>AutoML</span><span>Visualization</span>
+          </div>
+        </div>
+        <a href="#" class="btn">View On GitHub</a>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="project-card">
+        <img src="images/MedsXplore.jpg" alt="MedsXplore">
+        <div class="card-content">
+          <h3>MedsXplore</h3>
+          <p>Users upload images of medications (pills/strips/syrups) and get back detailed medical info, powered by OCR and search APIs.</p>
+          <div class="tech-tags">
+            <span>OCR</span><span>Azure</span><span>Flask</span><span>Web App</span>
+          </div>
+        </div>
+        <a href="#" class="btn">View On GitHub</a>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="project-card">
+        <img src="images/LawGPT.jpg" alt="Law GPT">
+        <div class="card-content">
+          <h3>Law GPT</h3>
+          <p>AI-driven legal chatbot with multilingual support. Uses RAG and ChromaDB to answer Indian law queries in simplified language.</p>
+          <div class="tech-tags">
+            <span>LLM</span><span>RAG</span><span>Ollama</span><span>ChromaDB</span><span>Voice Assistant</span><span>Multiligual Support</span>
+          </div>
+        </div>
+        <a href="#" class="btn">View On Kaggle</a>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="project-card">
+        <img src="images/Cyberbullying.jpg" alt="Cyberbullying Amplification">
+        <div class="card-content">
+          <h3>Cyberbullying Amplification</h3>
+          <p>IEEE-published research paper on ML models detecting cyberbullying on Twitter and how tweet engagement metrics amplify it.</p>
+          <div class="tech-tags">
+            <span>Machine Learning</span><span>SVM</span><span>Naive Bayes</span><span>Twitter API</span>
+          </div>
+        </div>
+        <a href="#" class="btn">View</a>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="project-card">
+        <img src="images/Smart AI CHat.jpg" alt="Smart AI Chat">
+        <div class="card-content">
+          <h3>Smart AI Chat</h3>
+          <p>Web tool to upload PDFs/CSVs and get instant answers using document QA pipeline. Built with Streamlit and NLP libraries.</p>
+          <div class="tech-tags">
+            <span>Document QA</span><span>PDF Parsing</span><span>Streamlit</span><span>Python</span>
+          </div>
+        </div>
+        <a href="#" class="btn">View On GitHub</a>
+      </div>
+
+    </div>
+  </section>
+
 </body>
 </html>
