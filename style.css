@@ -17,9 +17,23 @@ html, body {
   }
   
   .hero-image-overlay {
-    background-color: rgba(0,0,0,0.75);
+    background-color: rgba(0,0,0,0.10);
     height: 100%;
-  }
+    /* border: 2px solid; */
+    /* border-image: linear-gradient(90deg, #00ffae, #ff8c00) 1; */
+    box-shadow: 0 4px 32px 0 rgba(0,255,174,0.08), 0 1.5px 8px 0 rgba(255,140,0,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background-color: rgba(255, 165, 0, 0.55);
+    border-radius: 50%;
+    animation: float-particle 15s linear infinite;
+}
   
   nav {
     position: absolute;
@@ -90,43 +104,45 @@ html, body {
   nav ul li a {
     color: #fff;
     text-decoration:none;
-    transition: all .3s ease-in-out;
+    transition: all .3s cubic-bezier(.4,2,.6,1);
     display: inline-block;
     text-align:center;
     margin: 0;
     padding: 0;
     line-height:25px;
-  }
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    letter-spacing: 0.5px;
+    font-size: 1.08em;
+}
   
-  nav ul.main > li:hover > a {
-    transform: scale(1.1);
+  nav ul.main > li:hover > a, nav ul.main > li > ul > li:hover > a {
+    transform: scale(1.08);
     font-weight: 600;
-  }
+    color: #00ffae;
+}
   
   nav ul.main > li a:after{
     content: '';
     display: block;
-    height: 2px;
-    background-color: orange;
-    transition: all .3s ease-in-out;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #00ffae, #ff8c00);
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(.4,2,.6,1), background 0.3s;
     visibility: hidden;
     opacity: 0;
     margin-top: 0px;
-  }
+}
   
-  nav ul.main > li:hover > a:after
-  {
+  nav ul.main > li:hover > a:after {
     visibility: visible;
     opacity: 1;
-  }
+    width: 100%;
+    background: linear-gradient(90deg, #00ffae, #ff8c00);
+}
   
   nav ul.main > li:hover > a:after {
     transform: translateY(4px);
-  }
-  
-  nav ul.main > li > ul > li:hover > a {
-    transform: scale(1.1);
-    font-weight: 600;
   }
   
   nav ul li > .sub-menu {
@@ -156,3 +172,39 @@ html, body {
     opacity: 1;
     transform: translateX(25px);
   }
+
+/* Download CV link in submenu: gradient underline and neon glow on hover */
+nav ul.sub-menu > a[download] {
+    color: #fff;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    letter-spacing: 0.5px;
+    font-size: 1.08em;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    padding: 0 0 2px 0;
+    transition: all .3s cubic-bezier(.4,2,.6,1);
+}
+nav ul.sub-menu > a[download]:after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #00ffae, #ff8c00);
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(.4,2,.6,1), background 0.3s;
+    visibility: hidden;
+    opacity: 0;
+    margin-top: 0px;
+}
+nav ul.sub-menu > a[download]:hover,
+nav ul.sub-menu > a[download]:focus {
+    color: #00ffae;
+}
+nav ul.sub-menu > a[download]:hover:after,
+nav ul.sub-menu > a[download]:focus:after {
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+    background: linear-gradient(90deg, #00ffae, #ff8c00);
+}
