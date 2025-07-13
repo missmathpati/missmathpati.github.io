@@ -21,6 +21,64 @@
 body {
     font-family: "Space Grotesk", sans-serif;
     background-color: #000000;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated background particles */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 165, 0, 0.06) 0%, transparent 50%);
+    animation: float 25s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-15px) rotate(0.5deg); }
+    66% { transform: translateY(8px) rotate(-0.5deg); }
+}
+
+
+
+/* Floating particles effect */
+.particles {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background-color: rgba(255, 165, 0, 0.3);
+    border-radius: 50%;
+    animation: float-particle 15s linear infinite;
+}
+
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+.particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+.particle:nth-child(4) { left: 40%; animation-delay: 6s; }
+.particle:nth-child(5) { left: 50%; animation-delay: 8s; }
+.particle:nth-child(6) { left: 60%; animation-delay: 10s; }
+.particle:nth-child(7) { left: 70%; animation-delay: 12s; }
+.particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+
+@keyframes float-particle {
+    0% { top: 100%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: -10px; opacity: 0; }
 }
 
 .typewriter-container {
@@ -63,6 +121,19 @@ h1.type {
 </head>
 <body>
 
+
+  <!-- Floating particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
 <div class="typewriter-container">
     <div class="typewriter">
         <h1 class="type">Akanksha Mathpati</h1>
@@ -93,7 +164,7 @@ h1.type {
                     <ul class="sub-menu">
                         <li>
                            
-                        </li> <a href="Akanksha Mathpati Resume .pdf" download>Download CV</a>
+                        </li> <a href="Resumes/Akanksha Mathpati Resume.pdf" download>Download CV</a>
                         <li>
                             <a href="skills.html">Background</a>
                         </li>
