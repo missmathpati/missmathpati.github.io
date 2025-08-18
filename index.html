@@ -140,9 +140,16 @@ h1.type {
     </div>
 </div>
 
+<!-- Mobile Navigation Toggle -->
+<div class="mobile-nav-toggle" id="mobile-nav-toggle">
+    <div class="hamburger"></div>
+    <div class="hamburger"></div>
+    <div class="hamburger"></div>
+</div>
+
 <div class="container hero-image" id="main-content" style="display: none;">
     <div class="hero-image-overlay">
-        <nav>
+        <nav id="main-nav">
             <h1>Akanksha Mathpati</h1>
             <span class="chevron">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve" width="24" height="24" class="hovered-paths">
@@ -164,7 +171,7 @@ h1.type {
                     <ul class="sub-menu">
                         <li>
                            
-                        </li> <a href="Akanksha_Mathpati.pdf" download>Download CV</a>
+                        </li> <a href="Resumes/Akanksha Mathpati Resume.pdf" download>Download CV</a>
                         <li>
                             <a href="skills.html">Background</a>
                         </li>
@@ -199,6 +206,40 @@ h1.type {
             document.querySelector(".typewriter-container").style.display = 'none';
             document.getElementById("main-content").style.display = 'block';
         }
+
+        // Mobile Navigation Toggle
+        const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+        const mainNav = document.getElementById('main-nav');
+        
+        mobileNavToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mainNav.classList.toggle('active');
+        });
+
+        // Close mobile nav when clicking on a link
+        const navLinks = mainNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNavToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+            });
+        });
+
+        // Close mobile nav when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mainNav.contains(event.target) && !mobileNavToggle.contains(event.target)) {
+                mobileNavToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                mobileNavToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+            }
+        });
     });
 </script>
 <!--
