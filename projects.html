@@ -91,6 +91,31 @@
       100% { top: -10px; opacity: 0; }
     }
 
+    /* Back to Home Button */
+    .back-home {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid orange;
+      border-radius: 8px;
+      padding: 10px 15px;
+      color: orange;
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      font-size: 0.9rem;
+    }
+
+    .back-home:hover {
+      background: rgba(255, 165, 0, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
+    }
+
     .projects-section {
       max-width: 1200px;
       margin: auto;
@@ -136,7 +161,7 @@
 
     .projects-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       animation: fadeInUp 1s 0.2s both;
     }
@@ -299,13 +324,28 @@
       left: 100%;
     }
 
+    /* Responsive Design - Mobile First */
     @media (max-width: 768px) {
+      .back-home {
+        top: 15px;
+        left: 15px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+
       .projects-section {
         padding: 2rem 1rem;
+        margin-top: 60px;
       }
 
       .section-title {
         font-size: 2rem;
+        margin-bottom: 30px;
+      }
+
+      .section-title::after {
+        width: 60px;
+        height: 2px;
       }
 
       .projects-container {
@@ -316,6 +356,188 @@
       .project-card {
         height: auto;
         min-height: 400px;
+        padding: 1.2rem;
+      }
+
+      .project-card h3 {
+        font-size: 1.1rem;
+        min-height: 2.4em;
+      }
+
+      .project-card p {
+        font-size: 0.85rem;
+        min-height: 5em;
+      }
+
+      .tech-tags {
+        font-size: 0.75rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .back-home {
+        top: 10px;
+        left: 10px;
+        padding: 6px 10px;
+        font-size: 0.75rem;
+      }
+
+      .projects-section {
+        padding: 1.5rem 0.8rem;
+        margin-top: 50px;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+      }
+
+      .projects-container {
+        gap: 1.2rem;
+      }
+
+      .project-card {
+        padding: 1rem;
+        min-height: 350px;
+      }
+
+      .project-card img {
+        height: 150px;
+        margin-bottom: 0.8rem;
+      }
+
+      .project-card h3 {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+        min-height: 2.2em;
+      }
+
+      .project-card p {
+        font-size: 0.8rem;
+        margin-bottom: 0.8rem;
+        min-height: 4.5em;
+      }
+
+      .tech-tags {
+        font-size: 0.7rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Tablet Adjustments */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .projects-section {
+        padding: 40px 30px;
+      }
+
+      .section-title {
+        font-size: 2.2rem;
+      }
+
+      .projects-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.8rem;
+      }
+
+      .project-card {
+        height: 480px;
+        padding: 1.3rem;
+      }
+    }
+
+    /* Large Screen Optimizations */
+    @media (min-width: 1025px) {
+      .projects-section {
+        padding: 60px 30px;
+      }
+
+      .section-title {
+        font-size: 3rem;
+        margin-bottom: 50px;
+      }
+
+      .projects-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+      }
+
+      .project-card {
+        height: 550px;
+        padding: 1.8rem;
+      }
+    }
+
+    /* Landscape Mobile Adjustments */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .projects-section {
+        padding: 1.5rem 1rem;
+        margin-top: 40px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+
+      .projects-container {
+        gap: 1rem;
+      }
+
+      .project-card {
+        min-height: 300px;
+        padding: 1rem;
+      }
+
+      .project-card img {
+        height: 120px;
+      }
+
+      .project-card h3 {
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .project-card p {
+        font-size: 0.75rem;
+        margin-bottom: 0.6rem;
+        min-height: 3.5em;
+      }
+    }
+
+    /* Touch Device Optimizations */
+    @media (hover: none) and (pointer: coarse) {
+      .project-card:hover {
+        transform: none;
+      }
+
+      .project-card:hover img {
+        transform: none;
+      }
+
+      .btn:hover {
+        transform: none;
+      }
+
+      .back-home:hover {
+        transform: none;
+      }
+    }
+
+    /* High DPI Displays */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .network-bg {
+        transform: scale(1.1);
       }
     }
   </style>
@@ -338,6 +560,9 @@
     <line x1="600" y1="500" x2="700" y2="300" stroke="#ffb347" stroke-width="0.7"/>
     <line x1="200" y1="400" x2="100" y2="100" stroke="#ffb347" stroke-width="0.7"/>
   </svg>
+
+  <!-- Back to Home Button -->
+  <a href="index1.html" class="back-home">← Home</a>
 
   <!-- Floating particles -->
   <div class="particles">
@@ -370,21 +595,6 @@
 
       <!-- Card 2 -->
       <div class="project-card">
-        <img src="images/LawGPT.jpg" alt="Law GPT">
-        <div class="card-content">
-          <h3>Law GPT</h3>
-          <p>AI-driven legal chatbot with multilingual support. Uses RAG and ChromaDB to answer Indian law queries in simplified language.</p>
-          <div class="tech-tags">
-            <span>LLM</span><span>RAG</span><span>Ollama</span><span>ChromaDB</span><span>Voice Assistant</span><span>Multiligual Support</span>
-          </div>
-        </div>
-        <a href="https://www.kaggle.com/code/akankshamathpati8/lawgpt-api-akanksha" class="btn">View On Kaggle</a>
-      </div>
-
-      
-
-      <!-- Card 3 -->
-      <div class="project-card">
         <img src="images/NLP.png" alt="AI Industry Transformation">
         <div class="card-content">
           <h3>AI Industry Transformation</h3>
@@ -395,11 +605,9 @@
         </div>
         <a href="https://github.com/missmathpati/AI-Industry-Transformation" class="btn">View On GitHub</a>
       </div>
-      
-      
 
-      <!-- Card 4 -->
-       <div class="project-card">
+      <!-- Card 3 -->
+      <div class="project-card">
         <img src="images/ntp.jpg" alt="Network Traffic Patterns">
         <div class="card-content">
           <h3>Network Traffic Patterns</h3>
@@ -410,24 +618,21 @@
         </div>
         <a href="https://github.com/missmathpati/Network-Traffic-Patterns" class="btn">View On GitHub</a>
       </div>
-      
-     
 
-      <!-- Card 6 -->
+      <!-- Card 4 -->
       <div class="project-card">
-        <img src="images/MedsXplore.jpg" alt="MedsXplore">
+        <img src="images/Job.jpg" alt="Job Recommendation System">
         <div class="card-content">
-          <h3>MedsXplore</h3>
-          <p>Users upload images of medications (pills/strips/syrups) and get back detailed medical info, powered by OCR and search APIs.</p>
+          <h3>Job Recommendation System</h3>
+          <p>Developed a job-resume matching engine using factorization-based recommendation models. Matches top candidates to jobs and vice versa with high accuracy.</p>
           <div class="tech-tags">
-            <span>OCR</span><span>Azure</span><span>Flask</span><span>Web App</span>
+            <span>Recommender</span><span>NLP</span><span>ML</span><span>Factorization</span><span>Streamlit</span><span>Visualization</span>
           </div>
         </div>
-        <a href="https://github.com/missmathpati/MedsXplore" class="btn">View On GitHub</a>
+        <a href="https://github.com/missmathpati/Job-Recommendation-System" class="btn">View On GitHub</a>
       </div>
-      
 
-      <!-- Card 7 -->
+      <!-- Card 6 -->
       <div class="project-card">
         <img src="images/DIL.jpg" alt="Data Insights Lab">
         <div class="card-content">
@@ -440,19 +645,32 @@
         <a href="https://github.com/missmathpati/Data-Insights-Lab-full-project" class="btn">View On GitHub</a>
       </div>
 
-      <!-- Card 8 -->
-       <div class="project-card">
-        <img src="images/Job.jpg" alt="Job Recommendation System">
+      <!-- Card 7 -->
+      <div class="project-card">
+        <img src="images/MedsXplore.jpg" alt="MedsXplore">
         <div class="card-content">
-          <h3>Job Recommendation System</h3>
-          <p>Developed a job-resume matching engine using factorization-based recommendation models. Matches top candidates to jobs and vice versa with high accuracy.</p>
+          <h3>MedsXplore</h3>
+          <p>Users upload images of medications (pills/strips/syrups) and get back detailed medical info, powered by OCR and search APIs.</p>
           <div class="tech-tags">
-            <span>Recommender</span><span>NLP</span><span>ML</span><span>Factorization</span><span>Streamlit</span><span>Visualization</span>
+            <span>OCR</span><span>Azure</span><span>Flask</span><span>Web App</span>
           </div>
         </div>
-        <a href="https://github.com/missmathpati/Job-Recommendation-System" class="btn">View On GitHub</a>
+        <a href="https://github.com/missmathpati/MedsXplore" class="btn">View On GitHub</a>
       </div>
-     
+
+      <!-- Card 8 -->
+      <div class="project-card">
+        <img src="images/LawGPT.jpg" alt="Law GPT">
+        <div class="card-content">
+          <h3>Law GPT</h3>
+          <p>AI-driven legal chatbot with multilingual support. Uses RAG and ChromaDB to answer Indian law queries in simplified language.</p>
+          <div class="tech-tags">
+            <span>LLM</span><span>RAG</span><span>Ollama</span><span>ChromaDB</span><span>Voice Assistant</span><span>Multiligual Support</span>
+          </div>
+        </div>
+        <a href="https://www.kaggle.com/code/akankshamathpati8/lawgpt-api-akanksha" class="btn">View On Kaggle</a>
+      </div>
+
       <!-- Card 9 -->
       <div class="project-card">
         <img src="images/Cyberbullying.jpg" alt="Cyberbullying Amplification">
