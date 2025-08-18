@@ -1,1096 +1,464 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Fira+Mono' rel='stylesheet'>
-    <style> 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #000000;
-            color: #ffffff;
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Animated background particles */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 165, 0, 0.06) 0%, transparent 50%);
-            animation: float 25s ease-in-out infinite;
-            z-index: -2;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-15px) rotate(0.5deg); }
-            66% { transform: translateY(8px) rotate(-0.5deg); }
-        }
-
-        /* Animated SVG network background */
-        .network-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.13;
-            animation: moveNetwork 30s linear infinite alternate;
-        }
-
-        @keyframes moveNetwork {
-            0% { transform: scale(1) translateY(0); }
-            100% { transform: scale(1.05) translateY(-20px); }
-        }
-
-        /* Floating particles effect */
-        .particles {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px; height: 2px;
-            background-color: rgba(255, 165, 0, 0.3);
-            border-radius: 50%;
-            animation: float-particle 15s linear infinite;
-        }
-
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
-        .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
-        .particle:nth-child(4) { left: 40%; animation-delay: 6s; }
-        .particle:nth-child(5) { left: 50%; animation-delay: 8s; }
-        .particle:nth-child(6) { left: 60%; animation-delay: 10s; }
-        .particle:nth-child(7) { left: 70%; animation-delay: 12s; }
-        .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
-
-        @keyframes float-particle {
-            0% { top: 100%; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: -10px; opacity: 0; }
-        }
-
-        /* Back to Home Button */
-        .back-home {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid orange;
-            border-radius: 8px;
-            padding: 10px 15px;
-            color: orange;
-            text-decoration: none;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            font-size: 0.9rem;
-        }
-
-        .back-home:hover {
-            background: rgba(255, 165, 0, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .page-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem 0;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ff8c00;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-            text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 5px rgba(255, 165, 0, 0.5); }
-            to { text-shadow: 0 0 20px rgba(255, 165, 0, 0.8); }
-        }
-
-        .page-subtitle {
-            font-size: 1.1rem;
-            color: #00ffae;
-            font-weight: 400;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Main Content Layout */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-            animation: fadeInUp 1s 0.2s both;
-        }
-
-        /* Professional Experience Section */
-        .experience-section {
-            margin-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #00ffae;
-            margin-bottom: 2rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #00ffae, #ff8c00);
-            border-radius: 2px;
-        }
-
-        .experience-grid {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .experience-card {
-            background: rgba(20, 20, 20, 0.85);
-            border: 1px solid rgba(0, 255, 174, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
-        }
-
-        .experience-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, #00ffae, #ff8c00);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .experience-card:hover {
-            transform: translateY(-2px);
-            background: rgba(30, 30, 30, 0.9);
-            border-color: rgba(0, 255, 174, 0.4);
-            box-shadow: 0 8px 25px rgba(0, 255, 174, 0.2);
-        }
-
-        .experience-card:hover::before {
-            opacity: 1;
-        }
-
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .job-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ff8c00;
-            margin-bottom: 0.25rem;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        .company-name {
-            font-size: 1rem;
-            color: #00ffae;
-            font-weight: 500;
-            margin-top: 0.25rem;
-        }
-
-        .job-duration {
-            font-size: 0.9rem;
-            color: #ffb347;
-            font-weight: 500;
-            background: rgba(0, 255, 174, 0.1);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 255, 174, 0.3);
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        .job-title-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 0.25rem;
-        }
-
-        .job-description {
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .job-description ul {
-            margin: 0;
-            padding-left: 1.5rem;
-        }
-
-        .job-description li {
-            margin-bottom: 0.5rem;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tech-tag {
-            background: rgba(0, 255, 174, 0.1);
-            color: #00ffae;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            border: 1px solid rgba(0, 255, 174, 0.3);
-            font-family: 'Fira Mono', 'Consolas', monospace;
-            transition: all 0.3s ease;
-        }
-
-        .tech-tag:hover {
-            background: rgba(0, 255, 174, 0.2);
-            transform: translateY(-1px);
-        }
-
-        /* Education and Skills Section */
-        .right-section {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .education-card {
-            background: rgba(20, 20, 20, 0.85);
-            border: 1px solid rgba(0, 255, 174, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
-        }
-
-        .education-item {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(0, 255, 174, 0.1);
-        }
-
-        .education-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .degree-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ff8c00;
-            margin-bottom: 0.25rem;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        .institution {
-            font-size: 0.95rem;
-            color: #00ffae;
-            margin-bottom: 0.25rem;
-        }
-
-        .year {
-            font-size: 0.85rem;
-            color: #ffb347;
-            font-weight: 500;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        .grade {
-            font-size: 0.85rem;
-            color: #ccc;
-            margin-top: 0.5rem;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        /* Skills Grid */
-        .skills-section {
-            background: rgba(20, 20, 20, 0.85);
-            border: 1px solid rgba(0, 255, 174, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .skills-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 1rem;
-        }
-
-        .skills-grid:first-of-type {
-            margin-bottom: 1rem;
-        }
-
-        .skill-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0.75rem;
-            background: rgba(0, 255, 174, 0.05);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 255, 174, 0.1);
-        }
-
-        .skill-item:hover {
-            transform: translateY(-3px);
-            background: rgba(0, 255, 174, 0.1);
-            border-color: rgba(0, 255, 174, 0.3);
-            box-shadow: 0 5px 15px rgba(0, 255, 174, 0.2);
-        }
-
-        .skill-icon {
-            width: 32px;
-            height: 32px;
-            margin-bottom: 0.5rem;
-            transition: transform 0.3s ease;
-            filter: grayscale(0.3) brightness(1.1);
-            object-fit: contain;
-        }
-
-        .skill-item:hover .skill-icon {
-            transform: scale(1.1);
-            filter: grayscale(0) brightness(1.2);
-        }
-
-        .skill-name {
-            font-size: 0.75rem;
-            color: #00ffae;
-            font-weight: 500;
-            text-align: center;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        /* Custom AWS icon styling to match other icons */
-        .aws-icon {
-            width: 32px;
-            height: 32px;
-            margin-bottom: 0.5rem;
-            transition: transform 0.3s ease;
-            background: #FF9900;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 12px;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        .skill-item:hover .aws-icon {
-            transform: scale(1.1);
-            background: #ffaa33;
-        }
-
-        /* Partition Line */
-        .skills-partition {
-            display: flex;
-            align-items: center;
-            margin: 1rem 0;
-        }
-
-        .partition-line {
-            flex-grow: 1;
-            height: 1px;
-            background: linear-gradient(to right, rgba(0, 255, 174, 0.2), transparent, rgba(0, 255, 174, 0.2));
-        }
-
-        .partition-text {
-            margin: 0 1rem;
-            font-size: 0.9rem;
-            color: #00ffae;
-            font-weight: 500;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-        }
-
-        /* Responsive Design - Mobile First */
-        @media (max-width: 768px) {
-            .back-home {
-                top: 15px;
-                left: 15px;
-                padding: 8px 12px;
-                font-size: 0.8rem;
-            }
-
-            .container {
-                padding: 1rem;
-                margin-top: 60px;
-            }
-
-            .page-header {
-                padding: 1.5rem 0;
-                margin-bottom: 2rem;
-            }
-
-            .page-title {
-                font-size: 2rem;
-            }
-
-            .page-subtitle {
-                font-size: 1rem;
-            }
-
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .section-title {
-                font-size: 1.6rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .section-title::after {
-                width: 50px;
-                height: 2px;
-            }
-
-            .job-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.8rem;
-            }
-
-            .job-title-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .job-title {
-                font-size: 1.1rem;
-            }
-
-            .company-name {
-                font-size: 0.9rem;
-            }
-
-            .job-duration {
-                font-size: 0.8rem;
-                padding: 0.2rem 0.6rem;
-            }
-
-            .experience-card, .education-card, .skills-section {
-                padding: 1.2rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-                gap: 0.8rem;
-            }
-
-            .skill-item {
-                padding: 0.6rem;
-            }
-
-            .skill-icon {
-                width: 28px;
-                height: 28px;
-            }
-
-            .skill-name {
-                font-size: 0.7rem;
-            }
-
-            .partition-text {
-                font-size: 0.8rem;
-                margin: 0 0.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .back-home {
-                top: 10px;
-                left: 10px;
-                padding: 6px 10px;
-                font-size: 0.75rem;
-            }
-
-            .container {
-                padding: 0.8rem;
-                margin-top: 50px;
-            }
-
-            .page-header {
-                padding: 1rem 0;
-                margin-bottom: 1.5rem;
-            }
-
-            .page-title {
-                font-size: 1.8rem;
-            }
-
-            .page-subtitle {
-                font-size: 0.9rem;
-            }
-
-            .main-content {
-                gap: 1.2rem;
-            }
-
-            .section-title {
-                font-size: 1.4rem;
-                margin-bottom: 1.2rem;
-            }
-
-            .experience-card, .education-card, .skills-section {
-                padding: 1rem;
-            }
-
-            .job-title {
-                font-size: 1rem;
-            }
-
-            .company-name {
-                font-size: 0.85rem;
-            }
-
-            .job-duration {
-                font-size: 0.75rem;
-                padding: 0.15rem 0.5rem;
-            }
-
-            .job-description {
-                font-size: 0.9rem;
-            }
-
-            .job-description ul {
-                padding-left: 1.2rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
-                gap: 0.6rem;
-            }
-
-            .skill-item {
-                padding: 0.5rem;
-            }
-
-            .skill-icon {
-                width: 24px;
-                height: 24px;
-            }
-
-            .skill-name {
-                font-size: 0.65rem;
-            }
-
-            .partition-text {
-                font-size: 0.75rem;
-                margin: 0 0.6rem;
-            }
-
-            .tech-tag {
-                font-size: 0.75rem;
-                padding: 0.2rem 0.6rem;
-            }
-        }
-
-        /* Tablet Adjustments */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .container {
-                padding: 1.5rem;
-            }
-
-            .page-title {
-                font-size: 2.2rem;
-            }
-
-            .main-content {
-                gap: 1.8rem;
-            }
-
-            .section-title {
-                font-size: 1.7rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
-                gap: 0.9rem;
-            }
-        }
-
-        /* Large Screen Optimizations */
-        @media (min-width: 1025px) {
-            .container {
-                padding: 2.5rem;
-            }
-
-            .page-title {
-                font-size: 3rem;
-            }
-
-            .main-content {
-                gap: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
-                gap: 1.2rem;
-            }
-        }
-
-        /* Landscape Mobile Adjustments */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .container {
-                margin-top: 40px;
-                padding: 1rem;
-            }
-
-            .page-header {
-                padding: 1rem 0;
-                margin-bottom: 1.5rem;
-            }
-
-            .page-title {
-                font-size: 1.5rem;
-            }
-
-            .main-content {
-                gap: 1rem;
-            }
-
-            .section-title {
-                font-size: 1.3rem;
-                margin-bottom: 1rem;
-            }
-
-            .experience-card, .education-card, .skills-section {
-                padding: 1rem;
-            }
-        }
-
-        /* Touch Device Optimizations */
-        @media (hover: none) and (pointer: coarse) {
-            .experience-card:hover {
-                transform: none;
-            }
-
-            .skill-item:hover {
-                transform: none;
-            }
-
-            .tech-tag:hover {
-                transform: none;
-            }
-
-            .back-home:hover {
-                transform: none;
-            }
-        }
-
-        /* High DPI Displays */
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .network-bg {
-                transform: scale(1.1);
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- SVG Network Background -->
-    <svg class="network-bg" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="2" fill="#ffb347"/>
-        <circle cx="300" cy="200" r="2" fill="#ffb347"/>
-        <circle cx="500" cy="120" r="2" fill="#ffb347"/>
-        <circle cx="700" cy="300" r="2" fill="#ffb347"/>
-        <circle cx="200" cy="400" r="2" fill="#ffb347"/>
-        <circle cx="600" cy="500" r="2" fill="#ffb347"/>
-        <circle cx="800" cy="200" r="2" fill="#ffb347"/>
-        <line x1="100" y1="100" x2="300" y2="200" stroke="#ffb347" stroke-width="0.7"/>
-        <line x1="300" y1="200" x2="500" y2="120" stroke="#ffb347" stroke-width="0.7"/>
-        <line x1="500" y1="120" x2="700" y2="300" stroke="#ffb347" stroke-width="0.7"/>
-        <line x1="700" y1="300" x2="800" y2="200" stroke="#ffb347" stroke-width="0.7"/>
-        <line x1="200" y1="400" x2="600" y2="500" stroke="#ffb347" stroke-width="0.7"/>
-        <line x1="600" y1="500" x2="700" y2="300" stroke="#ffb347" stroke-width="0.7"/>
-        <line x1="200" y1="400" x2="100" y2="100" stroke="#ffb347" stroke-width="0.7"/>
-    </svg>
-
-    <!-- Back to Home Button -->
-    <a href="index1.html" class="back-home">← Home</a>
-
-    <!-- Floating particles -->
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-
-    <div class="container">
-        <div class="page-header">
-            <h1 class="page-title">Experience & Skills</h1>
-            <p class="page-subtitle">A comprehensive overview of my career journey and technical expertise</p>
-        </div>
-
-        <!-- Main Content Layout -->
-        <div class="main-content">
-            <!-- Professional Experience Section -->
-            <div class="experience-section">
-                <h2 class="section-title">Professional Experience</h2>
-                <div class="experience-grid">
-                    
-
-                    <div class="experience-card">
-                        <div class="job-header">
-                            <div class="job-title-row">
-                                <div class="job-title">Machine Learning Engineer</div>
-                                <div class="job-duration">Jun 2025 - Present</div>
-                            </div>
-                            <div class="company-name">Blue AI Labs</div>
-                        </div>
-                        <div class="job-description">
-                            <ul>
-                                <li>Spearheading the development of advanced Sales AI tools that analyze sales call transcripts and generate personalized coaching feedback using LLMs and prompt engineering.</li>
-                                <li>Designing and refining Retrieval-Augmented Generation (RAG) pipelines to enhance the contextual accuracy of sales recommendations.</li>
-                                <li>Conducting rigorous evaluation of model performance through real-time feedback loops, leading to continuous improvement in user engagement and sales effectiveness.</li>
-                            </ul>
-                        </div>
-                        <div class="tech-stack">
-                            <span class="tech-tag">LLMs</span>
-                            <span class="tech-tag">Prompt Engineering</span>
-                            <span class="tech-tag">RAG</span>
-                            <span class="tech-tag">Sales AI</span>
-                            <span class="tech-tag">Deep Learning</span>
-                        </div>
-                    </div>
-
-                    <div class="experience-card">
-                        <div class="job-header">
-                            <div class="job-title-row">
-                                <div class="job-title">AI/ML Engineer</div>
-                                <div class="job-duration">Nov 2024 - Present</div>
-                            </div>
-                            <div class="company-name">ITS Analytics & Business Intelligence Services @ University of Chicago</div>
-                        </div>
-                        <div class="job-description">
-                            <ul>
-                                <li>Implemented features in Phoenix AI, a ChatGPT-like conversational AI system tailored for University of Chicago services.</li>
-                                <li>Develop a Retrieval-Augmented Generation (RAG) model for the HR department, streamlining application processing and employee information management.</li>
-                                <li>Collaborate with cross-functional teams to integrate machine learning solutions into existing business intelligence frameworks, driving data-driven decision-making processes.</li>
-                            </ul>
-                        </div>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Machine Learning</span>
-                            <span class="tech-tag">NLP</span>
-                            <span class="tech-tag">RAG</span>
-                            <span class="tech-tag">AI/ML</span>
-                        </div>
-                    </div>
-
-                    <div class="experience-card">
-                        <div class="job-header">
-                            <div class="job-title-row">
-                                <div class="job-title">Project Intern</div>
-                                <div class="job-duration">May 2023 - Jul 2023</div>
-                            </div>
-                            <div class="company-name">Bhabha Atomic Research Centre, Mumbai, Maharashtra, India</div>
-                        </div>
-                        <div class="job-description">
-                            <ul>
-                                <li>Designed and implemented a web service that streamlines the process of extracting data and automatically fills in the details in the application.</li>
-                                <li>Developed a Python-based solution using Flask to automate data extraction from PDFs.</li>
-                                <li>Worked on various projects and completed them in the given deadline.</li>
-                            </ul>
-                        </div>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Flask</span>
-                            <span class="tech-tag">Web Development</span>
-                            <span class="tech-tag">Data Extraction</span>
-                        </div>
-                    </div>
-
-                    <div class="experience-card">
-                        <div class="job-header">
-                            <div class="job-title-row">
-                                <div class="job-title">Data Science Intern</div>
-                                <div class="job-duration">Jan 2023 - Feb 2023</div>
-                            </div>
-                            <div class="company-name">CodeClause, India</div>
-                        </div>
-                        <div class="job-description">
-                            <ul>
-                                <li>Worked on various projects and completed them in the given deadline.</li>
-                                <li>Drew conclusions on topics such as customer churn analysis, market basket analysis etc.</li>
-                                <li>Performed data analysis and employed various machine learning algorithms.</li>
-                            </ul>
-                        </div>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Data Analysis</span>
-                            <span class="tech-tag">Machine Learning</span>
-                            <span class="tech-tag">Customer Analytics</span>
-                            <span class="tech-tag">Statistical Analysis</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Education and Skills Section -->
-            <div class="right-section">
-                <div class="education-card">
-                    <h2 class="section-title">Education</h2>
-                    <div class="education-item">
-                        <div class="degree-title">MS in Applied Data Science</div>
-                        <div class="institution">University of Chicago, Illinois</div>
-                        <div class="year">2024 - Present</div>
-                        <div class="grade">Grade: 4.0/4.0</div>
-                    </div>
-                    <div class="education-item">
-                        <div class="degree-title">Bachelor of Technology in Computer Science</div>
-                        <div class="institution">Dr. D Y Patil University, Navi Mumbai</div>
-                        <div class="year">2020 - 2024</div>
-                        <div class="grade">Grade: 9.99/10<br>Gold Medalist</div>
-                    </div>
-                </div>
-
-                <div class="skills-section">
-                    <h2 class="section-title">Technical Skills</h2>
-                    <div class="skills-content">
-                        <div class="skills-grid">
-                            <div class="skill-item">
-                                <img src="images/icons/Python.png" alt="Python" class="skill-icon">
-                                <div class="skill-name">Python</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/JavaScript.png" alt="JavaScript" class="skill-icon">
-                                <div class="skill-name">JavaScript</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/HTML5.png" alt="HTML5" class="skill-icon">
-                                <div class="skill-name">HTML5</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/CSS3.png" alt="CSS3" class="skill-icon">
-                                <div class="skill-name">CSS3</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/Flask1.png" alt="Flask" class="skill-icon">
-                                <div class="skill-name">Flask</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/MySQL.png" alt="MySQL" class="skill-icon">
-                                <div class="skill-name">MySQL</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/R.png" alt="R" class="skill-icon">
-                                <div class="skill-name">R</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/power-bi.png" alt="Power BI" class="skill-icon">
-                                <div class="skill-name">Power BI</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/Git.png" alt="Git" class="skill-icon">
-                                <div class="skill-name">Git</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/github1.png" alt="GitHub" class="skill-icon">
-                                <div class="skill-name">GitHub</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/Jupyter.png" alt="Jupyter" class="skill-icon">
-                                <div class="skill-name">Jupyter</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/Visual Studio Code (VS Code).png" alt="VS Code" class="skill-icon">
-                                <div class="skill-name">VS Code</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/aws.png" alt="AWS" class="skill-icon">
-                                <div class="skill-name">AWS</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/gcp.png" alt="GCP" class="skill-icon">
-                                <div class="skill-name">GCP</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/streamlit.png" alt="streamlit" class="skill-icon">
-                                <div class="skill-name">Streamlit</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/api.png" alt="API" class="skill-icon">
-                                <div class="skill-name">FAST API</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/spark.png" alt="spark" class="skill-icon">
-                                <div class="skill-name">Spark</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/docker.png" alt="docker" class="skill-icon">
-                                <div class="skill-name">Docker</div>
-                            </div>
-                        </div>
-
-                        <!-- Partition Line -->
-                        <div class="skills-partition">
-                            <div class="partition-line"></div>
-                            <div class="partition-text">Other Skills</div>
-                            <div class="partition-line"></div>
-                        </div>
-
-                        <div class="skills-grid">
-                            <div class="skill-item">
-                                <img src="images/icons/anaconda.png" alt="Anaconda" class="skill-icon">
-                                <div class="skill-name">Anaconda</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/Figma.png" alt="Figma" class="skill-icon">
-                                <div class="skill-name">Figma</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/Bootstrap.png" alt="Bootstrap" class="skill-icon">
-                                <div class="skill-name">Bootstrap</div>
-                            </div>
-                            <div class="skill-item">
-                                <img src="images/icons/notion2.png" alt="Notion" class="skill-icon">
-                                <div class="skill-name">Notion</div>
-                            </div>
-                        </div>
-
-                        <!-- Second Partition Line -->
-                        <div class="skills-partition">
-                            <div class="partition-line"></div>
-                            <div class="partition-text">Machine Learning & AI</div>
-                            <div class="partition-line"></div>
-                        </div>
-
-                        <div class="skills-grid">
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #FF6F00; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 10px; font-family: 'Fira Mono', 'Consolas', monospace;">TF</div>
-                                <div class="skill-name">TensorFlow</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #EE4C2C; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 10px; font-family: 'Fira Mono', 'Consolas', monospace;">PT</div>
-                                <div class="skill-name">PyTorch</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #F7931E; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 9px; font-family: 'Fira Mono', 'Consolas', monospace;">SKL</div>
-                                <div class="skill-name">Scikit-learn</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #130654; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 10px; font-family: 'Fira Mono', 'Consolas', monospace;">PD</div>
-                                <div class="skill-name">Pandas</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #4DABCF; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 10px; font-family: 'Fira Mono', 'Consolas', monospace;">NP</div>
-                                <div class="skill-name">NumPy</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #11557C; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 8px; font-family: 'Fira Mono', 'Consolas', monospace;">MPL</div>
-                                <div class="skill-name">Matplotlib</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #7A9B76; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 9px; font-family: 'Fira Mono', 'Consolas', monospace;">SB</div>
-                                <div class="skill-name">Seaborn</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #7CB342; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 10px; font-family: 'Fira Mono', 'Consolas', monospace;">NLTK</div>
-                                <div class="skill-name">NLTK</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #09A3D5; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 10px; font-family: 'Fira Mono', 'Consolas', monospace;">SP</div>
-                                <div class="skill-name">SpaCy</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #FF6B35; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 8px; font-family: 'Fira Mono', 'Consolas', monospace;">CV</div>
-                                <div class="skill-name">OpenCV</div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-icon" style="background: #FFD43B; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; font-size: 8px; font-family: 'Fira Mono', 'Consolas', monospace;">HF</div>
-                                <div class="skill-name">Hugging Face</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+html, body {
+    height: 100%;
+  }
+  
+  body {
+    background: #000;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+  }
+  
+  .hero-image {
+    background: url('https://media.gettyimages.com/photos/in-this-picture-taken-on-may-15-kalash-women-wearing-traditional-to-picture-id1148787874?s=2048x2048') center center no-repeat;
+    background-size: cover;
+    height: 100%;
+  }
+  
+  .hero-image-overlay {
+    background-color: rgba(0,0,0,0.10);
+    height: 100%;
+    /* border: 2px solid; */
+    /* border-image: linear-gradient(90deg, #00ffae, #ff8c00) 1; */
+    box-shadow: 0 4px 32px 0 rgba(0,255,174,0.08), 0 1.5px 8px 0 rgba(255,140,0,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background-color: rgba(255, 165, 0, 0.55);
+    border-radius: 50%;
+    animation: float-particle 15s linear infinite;
+}
+  
+  nav {
+    position: absolute;
+    height: 340px;
+    top: 0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin: auto;
+    text-align:center;
+  }
+  
+  h1 {
+    margin: 45px auto;
+    width: 326px;
+    padding-bottom: 6px;
+    font-weight: 200;
+    color: orange;
+    font-size: 46px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .chevron {
+    display:block;
+    width: 24px;
+    height: 24px;
+    margin:-40px auto 30px auto;
+    animation: pulse 2s infinite;
+    display:block;
+    color: #fff;
+    opacity: 0;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: translate(0, 0); 
+      opacity: 0.5;
+    }
+  
+    50% {
+      transform: translate(0, 10px);
+       opacity: 0.99;
+    }
+  
+    100% {
+       transform: translate(0, 0); 
+       opacity: 0;
+    }
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  ul.main {
+    width: 200px;
+    margin: 0 auto;
+  }
+  
+  nav > ul.main > li {
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    text-align:center;
+  }
+  
+  nav ul li a {
+    color: #fff;
+    text-decoration:none;
+    transition: all .3s cubic-bezier(.4,2,.6,1);
+    display: inline-block;
+    text-align:center;
+    margin: 0;
+    padding: 0;
+    line-height:25px;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    letter-spacing: 0.5px;
+    font-size: 1.08em;
+}
+  
+  nav ul.main > li:hover > a, nav ul.main > li > ul > li:hover > a {
+    transform: scale(1.08);
+    font-weight: 600;
+    color: #00ffae;
+}
+  
+  nav ul.main > li a:after{
+    content: '';
+    display: block;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #00ffae, #ff8c00);
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(.4,2,.6,1), background 0.3s;
+    visibility: hidden;
+    opacity: 0;
+    margin-top: 0px;
+}
+  
+  nav ul.main > li:hover > a:after {
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+    background: linear-gradient(90deg, #00ffae, #ff8c00);
+}
+  
+  nav ul.main > li:hover > a:after {
+    transform: translateY(4px);
+  }
+  
+  nav ul li > .sub-menu {
+    position: absolute;
+    right: -310px;
+    width: 225px;
+    top: -40px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .4s ease-in-out;
+  }
+  
+  nav ul li > .sub-menu:before {
+      content: '';
+      width: 145px;
+      height: 1px;
+      background-color: #fff;
+      display: block;
+      position: absolute;
+      top: 60px;
+    margin-left: -100px
+  }
+  
+  
+  nav ul li:hover > .sub-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(25px);
+  }
+
+/* Download CV link in submenu: gradient underline and neon glow on hover */
+nav ul.sub-menu > a[download] {
+    color: #fff;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    letter-spacing: 0.5px;
+    font-size: 1.08em;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    padding: 0 0 2px 0;
+    transition: all .3s cubic-bezier(.4,2,.6,1);
+}
+nav ul.sub-menu > a[download]:after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #00ffae, #ff8c00);
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(.4,2,.6,1), background 0.3s;
+    visibility: hidden;
+    opacity: 0;
+    margin-top: 0px;
+}
+nav ul.sub-menu > a[download]:hover,
+nav ul.sub-menu > a[download]:focus {
+    color: #00ffae;
+}
+nav ul.sub-menu > a[download]:hover:after,
+nav ul.sub-menu > a[download]:focus:after {
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+    background: linear-gradient(90deg, #00ffae, #ff8c00);
+}
+
+/* Mobile Navigation Toggle */
+.mobile-nav-toggle {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid orange;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-toggle:hover {
+  background: rgba(255, 165, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.mobile-nav-toggle .hamburger {
+  width: 25px;
+  height: 3px;
+  background: orange;
+  margin: 5px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+.mobile-nav-toggle.active .hamburger:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-nav-toggle.active .hamburger:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle.active .hamburger:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Responsive Design - Mobile First */
+@media (max-width: 768px) {
+  /* Mobile Navigation */
+  .mobile-nav-toggle {
+    display: block;
+  }
+  
+  nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    transition: left 0.3s ease;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  nav.active {
+    left: 0;
+  }
+  
+  nav h1 {
+    font-size: 32px;
+    width: auto;
+    margin: 20px auto 40px auto;
+  }
+  
+  ul.main {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  nav > ul.main > li {
+    height: auto;
+    line-height: normal;
+    margin: 15px 0;
+  }
+  
+  nav ul li a {
+    font-size: 1.2em;
+    padding: 15px 20px;
+    display: block;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  nav ul li a:hover {
+    background: rgba(255, 165, 0, 0.1);
+    transform: none;
+  }
+  
+  /* Mobile submenu */
+  nav ul li > .sub-menu {
+    position: static;
+    width: 100%;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  
+  nav ul li > .sub-menu:before {
+    display: none;
+  }
+  
+  nav ul.sub-menu > li {
+    margin: 10px 0;
+  }
+  
+  nav ul.sub-menu > a[download] {
+    display: block;
+    padding: 10px 15px;
+    background: rgba(255, 165, 0, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+  }
+  
+  /* Hero image adjustments */
+  .hero-image {
+    background-position: center;
+  }
+  
+  /* Typewriter adjustments */
+  .typewriter-container h1.type {
+    font-size: 2rem;
+    text-align: center;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  nav h1 {
+    font-size: 28px;
+    margin: 15px auto 30px auto;
+  }
+  
+  nav ul li a {
+    font-size: 1.1em;
+    padding: 12px 15px;
+  }
+  
+  .typewriter-container h1.type {
+    font-size: 1.5rem;
+  }
+  
+  .mobile-nav-toggle {
+    top: 15px;
+    right: 15px;
+    padding: 8px;
+  }
+  
+  .mobile-nav-toggle .hamburger {
+    width: 20px;
+    height: 2px;
+  }
+}
+
+/* Tablet Adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  nav h1 {
+    font-size: 40px;
+    width: auto;
+    max-width: 400px;
+  }
+  
+  ul.main {
+    width: 250px;
+  }
+  
+  nav > ul.main > li {
+    height: 45px;
+    line-height: 45px;
+  }
+  
+  nav ul li a {
+    font-size: 1.1em;
+  }
+  
+  .typewriter-container h1.type {
+    font-size: 2.5rem;
+  }
+}
+
+/* Large Screen Optimizations */
+@media (min-width: 1025px) {
+  nav {
+    height: 400px;
+  }
+  
+  nav h1 {
+    font-size: 52px;
+    width: 400px;
+  }
+  
+  ul.main {
+    width: 220px;
+  }
+  
+  .typewriter-container h1.type {
+    font-size: 3.5rem;
+  }
+}
+
+/* Landscape Mobile Adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+  nav {
+    height: 100vh;
+    padding: 20px 0;
+  }
+  
+  nav h1 {
+    margin: 10px auto 20px auto;
+    font-size: 24px;
+  }
+  
+  nav > ul.main > li {
+    margin: 8px 0;
+  }
+  
+  .typewriter-container h1.type {
+    font-size: 1.8rem;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hero-image {
+    background-image: url('https://media.gettyimages.com/photos/in-this-picture-taken-on-may-15-kalash-women-wearing-traditional-to-picture-id1148787874?s=2048x2048');
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  nav ul li a:hover {
+    transform: none;
+  }
+  
+  nav ul.main > li:hover > a:after {
+    transform: none;
+  }
+  
+  .mobile-nav-toggle:hover {
+    transform: none;
+  }
+}
