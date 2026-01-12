@@ -1,705 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Projects</title>
-  <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-  <link href='https://fonts.googleapis.com/css?family=Fira+Mono' rel='stylesheet'>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #000000;
-      color: #ffffff;
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Animated background particles */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(255, 165, 0, 0.06) 0%, transparent 50%);
-      animation: float 25s ease-in-out infinite;
-      z-index: -2;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      33% { transform: translateY(-15px) rotate(0.5deg); }
-      66% { transform: translateY(8px) rotate(-0.5deg); }
-    }
-
-    /* Animated SVG network background */
-    .network-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0.13;
-      animation: moveNetwork 30s linear infinite alternate;
-    }
-
-    @keyframes moveNetwork {
-      0% { transform: scale(1) translateY(0); }
-      100% { transform: scale(1.05) translateY(-20px); }
-    }
-
-    /* Floating particles effect */
-    .particles {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .particle {
-      position: absolute;
-      width: 2px; height: 2px;
-      background-color: rgba(255, 165, 0, 0.3);
-      border-radius: 50%;
-      animation: float-particle 15s linear infinite;
-    }
-
-    .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-    .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
-    .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
-    .particle:nth-child(4) { left: 40%; animation-delay: 6s; }
-    .particle:nth-child(5) { left: 50%; animation-delay: 8s; }
-    .particle:nth-child(6) { left: 60%; animation-delay: 10s; }
-    .particle:nth-child(7) { left: 70%; animation-delay: 12s; }
-    .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
-
-    @keyframes float-particle {
-      0% { top: 100%; opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { top: -10px; opacity: 0; }
-    }
-
-    /* Back to Home Button */
-    .back-home {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-      background: rgba(0, 0, 0, 0.8);
-      border: 2px solid orange;
-      border-radius: 8px;
-      padding: 10px 15px;
-      color: orange;
-      text-decoration: none;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      font-size: 0.9rem;
-    }
-
-    .back-home:hover {
-      background: rgba(255, 165, 0, 0.2);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
-    }
-
-    .projects-section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 50px 20px;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      margin-bottom: 40px;
-      font-family: 'Inter', sans-serif;
-      color: #ff8c00;
-      font-weight: 700;
-      text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
-      animation: glow 2s ease-in-out infinite alternate;
-      position: relative;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 5px rgba(255, 165, 0, 0.5); }
-      to { text-shadow: 0 0 20px rgba(255, 165, 0, 0.8); }
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(90deg, #00ffae, #ff8c00);
-      border-radius: 2px;
-    }
-
-    .projects-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      animation: fadeInUp 1s 0.2s both;
-    }
-
-    .project-card {
-      background: rgba(20, 20, 20, 0.85);
-      border: 1px solid rgba(0, 255, 174, 0.2);
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
-      display: flex;
-      flex-direction: column;
-      height: 520px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: linear-gradient(to bottom, #00ffae, #ff8c00);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-8px);
-      background: rgba(30, 30, 30, 0.9);
-      border-color: rgba(0, 255, 174, 0.4);
-      box-shadow: 0 15px 35px rgba(0, 255, 174, 0.2);
-    }
-
-    .project-card:hover::before {
-      opacity: 1;
-    }
-
-    .project-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-      transition: transform 0.3s ease;
-      margin-bottom: 1rem;
-    }
-
-    .project-card:hover img {
-      transform: scale(1.02);
-    }
-
-    .card-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .project-card h3 {
-      font-size: 1.2rem;
-      margin: 0 0 1rem 0;
-      color: #ff8c00;
-      line-height: 1.3;
-      min-height: 2.6em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      font-weight: 600;
-      font-family: 'Fira Mono', 'Consolas', monospace;
-    }
-
-    .project-card p {
-      font-size: 0.9rem;
-      color: #ccc;
-      line-height: 1.5;
-      max-height: 9em;
-      overflow-y: auto;
-      margin-bottom: 1rem;
-      flex: 1;
-      min-height: 6em;
-    }
-
-    .project-card p::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .project-card p::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #00ffae, #ff8c00);
-      border-radius: 2px;
-    }
-
-    .project-card p::-webkit-scrollbar-track {
-      background-color: rgba(0, 255, 174, 0.1);
-      border-radius: 2px;
-    }
-
-    .tech-tags {
-      margin-top: auto;
-      margin-bottom: 1rem;
-      color: #00ffae;
-      font-size: 0.8rem;
-      font-weight: 500;
-      line-height: 1.3;
-      min-height: 1.3em;
-      opacity: 0.9;
-      font-family: 'Fira Mono', 'Consolas', monospace;
-    }
-
-    .tech-tags span {
-      display: inline;
-    }
-
-    .tech-tags span:not(:last-child)::after {
-      content: ", ";
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      border: 1px solid #00ffae;
-      background: rgba(0, 255, 174, 0.1);
-      color: #00ffae;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      font-size: 0.85rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      font-family: 'Fira Mono', 'Consolas', monospace;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .btn:hover {
-      background: #00ffae;
-      color: #000000;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 255, 174, 0.3);
-      border-color: #00ffae;
-    }
-
-    .btn:hover::before {
-      left: 100%;
-    }
-
-    /* Responsive Design - Mobile First */
-    @media (max-width: 768px) {
-      .back-home {
-        top: 15px;
-        left: 15px;
-        padding: 8px 12px;
-        font-size: 0.8rem;
-      }
-
-      .projects-section {
-        padding: 2rem 1rem;
-        margin-top: 60px;
-      }
-
-      .section-title {
-        font-size: 2rem;
-        margin-bottom: 30px;
-      }
-
-      .section-title::after {
-        width: 60px;
-        height: 2px;
-      }
-
-      .projects-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      .project-card {
-        height: auto;
-        min-height: 400px;
-        padding: 1.2rem;
-      }
-
-      .project-card h3 {
-        font-size: 1.1rem;
-        min-height: 2.4em;
-      }
-
-      .project-card p {
-        font-size: 0.85rem;
-        min-height: 5em;
-      }
-
-      .tech-tags {
-        font-size: 0.75rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .btn {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.8rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .back-home {
-        top: 10px;
-        left: 10px;
-        padding: 6px 10px;
-        font-size: 0.75rem;
-      }
-
-      .projects-section {
-        padding: 1.5rem 0.8rem;
-        margin-top: 50px;
-      }
-
-      .section-title {
-        font-size: 1.8rem;
-        margin-bottom: 25px;
-      }
-
-      .projects-container {
-        gap: 1.2rem;
-      }
-
-      .project-card {
-        padding: 1rem;
-        min-height: 350px;
-      }
-
-      .project-card img {
-        height: 150px;
-        margin-bottom: 0.8rem;
-      }
-
-      .project-card h3 {
-        font-size: 1rem;
-        margin-bottom: 0.8rem;
-        min-height: 2.2em;
-      }
-
-      .project-card p {
-        font-size: 0.8rem;
-        margin-bottom: 0.8rem;
-        min-height: 4.5em;
-      }
-
-      .tech-tags {
-        font-size: 0.7rem;
-        margin-bottom: 0.6rem;
-      }
-
-      .btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.75rem;
-      }
-    }
-
-    /* Tablet Adjustments */
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .projects-section {
-        padding: 40px 30px;
-      }
-
-      .section-title {
-        font-size: 2.2rem;
-      }
-
-      .projects-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.8rem;
-      }
-
-      .project-card {
-        height: 480px;
-        padding: 1.3rem;
-      }
-    }
-
-    /* Large Screen Optimizations */
-    @media (min-width: 1025px) {
-      .projects-section {
-        padding: 60px 30px;
-      }
-
-      .section-title {
-        font-size: 3rem;
-        margin-bottom: 50px;
-      }
-
-      .projects-container {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2.5rem;
-      }
-
-      .project-card {
-        height: 550px;
-        padding: 1.8rem;
-      }
-    }
-
-    /* Landscape Mobile Adjustments */
-    @media (max-height: 500px) and (orientation: landscape) {
-      .projects-section {
-        padding: 1.5rem 1rem;
-        margin-top: 40px;
-      }
-
-      .section-title {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-      }
-
-      .projects-container {
-        gap: 1rem;
-      }
-
-      .project-card {
-        min-height: 300px;
-        padding: 1rem;
-      }
-
-      .project-card img {
-        height: 120px;
-      }
-
-      .project-card h3 {
-        font-size: 0.9rem;
-        margin-bottom: 0.6rem;
-      }
-
-      .project-card p {
-        font-size: 0.75rem;
-        margin-bottom: 0.6rem;
-        min-height: 3.5em;
-      }
-    }
-
-    /* Touch Device Optimizations */
-    @media (hover: none) and (pointer: coarse) {
-      .project-card:hover {
-        transform: none;
-      }
-
-      .project-card:hover img {
-        transform: none;
-      }
-
-      .btn:hover {
-        transform: none;
-      }
-
-      .back-home:hover {
-        transform: none;
-      }
-    }
-
-    /* High DPI Displays */
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-      .network-bg {
-        transform: scale(1.1);
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Akanksha Mathpati</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- SVG Network Background -->
-  <svg class="network-bg" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="100" cy="100" r="2" fill="#ffb347"/>
-    <circle cx="300" cy="200" r="2" fill="#ffb347"/>
-    <circle cx="500" cy="120" r="2" fill="#ffb347"/>
-    <circle cx="700" cy="300" r="2" fill="#ffb347"/>
-    <circle cx="200" cy="400" r="2" fill="#ffb347"/>
-    <circle cx="600" cy="500" r="2" fill="#ffb347"/>
-    <circle cx="800" cy="200" r="2" fill="#ffb347"/>
-    <line x1="100" y1="100" x2="300" y2="200" stroke="#ffb347" stroke-width="0.7"/>
-    <line x1="300" y1="200" x2="500" y2="120" stroke="#ffb347" stroke-width="0.7"/>
-    <line x1="500" y1="120" x2="700" y2="300" stroke="#ffb347" stroke-width="0.7"/>
-    <line x1="700" y1="300" x2="800" y2="200" stroke="#ffb347" stroke-width="0.7"/>
-    <line x1="200" y1="400" x2="600" y2="500" stroke="#ffb347" stroke-width="0.7"/>
-    <line x1="600" y1="500" x2="700" y2="300" stroke="#ffb347" stroke-width="0.7"/>
-    <line x1="200" y1="400" x2="100" y2="100" stroke="#ffb347" stroke-width="0.7"/>
-  </svg>
-
-  <!-- Back to Home Button -->
-  <a href="index.html" class="back-home">← Home</a>
-
-  <!-- Floating particles -->
-  <div class="particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-  </div>
-
-  <section class="projects-section">
-    <h1 class="section-title">Projects</h1>
-    <div class="projects-container">
-
-      <!-- Card 1 -->
-      <div class="project-card">
-        <img src="images/stack.png" alt="Stackoverflow NLP Analysis">
-        <div class="card-content">
-          <h3>Stackoverflow NLP Analysis</h3>
-          <p>Processed 30 GB of StackOverflow posts using PySpark NLP and Spark ML. Achieved 95%+ accuracy across 50 logistic regression models to uncover user trends and engagement patterns.</p>
-          <div class="tech-tags">
-            <span>Feature Engineering</span><span>Spark ML</span><span>Spark NLP</span><span>EDA</span><span>Big Data</span><span>Visualization</span><span>GCP</span>
-          </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">&lt;AM/&gt;</a>
+            <ul class="navbar-menu" id="navbar-menu">
+                <li><a href="About.html" class="navbar-link">About</a></li>
+                <li><a href="skills.html" class="navbar-link">Experience</a></li>
+                <li><a href="projects.html" class="navbar-link">Projects</a></li>
+                <li><a href="contact.html" class="navbar-link">Contact</a></li>
+            </ul>
+            <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-        <a href="https://github.com/missmathpati/Stackoverflow-NLP-Analysis" class="btn">View On GitHub</a>
-      </div>
+    </nav>
 
-      <!-- Card 2 -->
-      <div class="project-card">
-        <img src="images/NLP.png" alt="AI Industry Transformation">
-        <div class="card-content">
-          <h3>AI Industry Transformation</h3>
-          <p>Performed NLP on 200K+ AI-related articles from Goldman Sachs data to uncover AI impact across industries, tracking trends, risks, and adoption success stories.</p>
-          <div class="tech-tags">
-            <span>NLP</span><span>Topic Modeling</span><span>BERT</span><span>EDA</span><span>Data Analysis</span><span>Visualization</span>
-          </div>
+    <!-- Back to Home Button -->
+    <a href="index.html" class="back-home">← Home</a>
+
+    <!-- Projects Section -->
+    <section class="section" style="margin-top: 80px;">
+        <div class="container">
+            <h1 class="section-title">Projects</h1>
+            <p class="section-subtitle">A collection of my recent work and contributions</p>
+
+            <!-- Featured Projects Carousel -->
+            <div style="margin-bottom: var(--spacing-xl);">
+                <h2 style="font-family: var(--font-mono); color: var(--accent-primary); font-size: 1.5rem; margin-bottom: var(--spacing-md); text-align: center; border-bottom: 2px solid var(--border-color); padding-bottom: var(--spacing-sm);">
+                    Featured Projects
+                </h2>
+                <div class="carousel-container">
+                    <button class="carousel-btn carousel-btn-prev" id="carousel-prev" aria-label="Previous project">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    <div class="carousel-wrapper">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- Featured 1: Cyberbullying -->
+                            <div class="carousel-slide">
+                                <div class="project-card featured-project">
+                                    <img src="images/Cyberbullying.jpg" alt="Cyberbullying Amplification" class="project-image">
+                                    <div class="project-content">
+                                        <div style="display: flex; align-items: center; gap: var(--spacing-xs); margin-bottom: var(--spacing-xs);">
+                                            <span style="color: var(--accent-primary); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Featured</span>
+                                            <span style="color: var(--text-muted);">•</span>
+                                            <span style="color: var(--accent-secondary); font-family: var(--font-mono); font-size: 0.75rem;">Research</span>
+                                        </div>
+                                        <h3 class="project-title">Cyberbullying Amplification</h3>
+                                        <p class="project-description">
+                                            IEEE-published research paper on ML models detecting cyberbullying on Twitter and how tweet engagement 
+                                            metrics amplify it.
+                                        </p>
+                                        <div class="project-tech">
+                                            <span class="tech-tag">Machine Learning</span>
+                                            <span class="tech-tag">SVM</span>
+                                            <span class="tech-tag">Naive Bayes</span>
+                                            <span class="tech-tag">Twitter API</span>
+                                        </div>
+                                        <a href="https://ieeexplore.ieee.org/document/10463218" target="_blank" class="project-link btn btn-secondary">View Paper</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Featured 2: MedsXplore -->
+                            <div class="carousel-slide">
+                                <div class="project-card featured-project">
+                                    <img src="images/MedsXplore.jpg" alt="MedsXplore" class="project-image">
+                                    <div class="project-content">
+                                        <div style="display: flex; align-items: center; gap: var(--spacing-xs); margin-bottom: var(--spacing-xs);">
+                                            <span style="color: var(--accent-primary); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Featured</span>
+                                            <span style="color: var(--text-muted);">•</span>
+                                            <span style="color: var(--accent-secondary); font-family: var(--font-mono); font-size: 0.75rem;">Copyrighted</span>
+                                        </div>
+                                        <h3 class="project-title">MedsXplore</h3>
+                                        <p class="project-description">
+                                            Users upload images of medications (pills/strips/syrups) and get back detailed medical info, 
+                                            powered by OCR and search APIs.
+                                        </p>
+                                        <div class="project-tech">
+                                            <span class="tech-tag">OCR</span>
+                                            <span class="tech-tag">Azure</span>
+                                            <span class="tech-tag">Flask</span>
+                                            <span class="tech-tag">Web App</span>
+                                        </div>
+                                        <a href="https://github.com/missmathpati/MedsXplore" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Featured 3: Stackoverflow -->
+                            <div class="carousel-slide">
+                                <div class="project-card featured-project">
+                                    <img src="images/stack.png" alt="Stackoverflow NLP Analysis" class="project-image">
+                                    <div class="project-content">
+                                        <div style="display: flex; align-items: center; gap: var(--spacing-xs); margin-bottom: var(--spacing-xs);">
+                                            <span style="color: var(--accent-primary); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Featured</span>
+                                            <span style="color: var(--text-muted);">•</span>
+                                            <span style="color: var(--accent-secondary); font-family: var(--font-mono); font-size: 0.75rem;">30GB Processed</span>
+                                        </div>
+                                        <h3 class="project-title">Stackoverflow NLP Analysis</h3>
+                                        <p class="project-description">
+                                            Processed 30 GB of StackOverflow posts using PySpark NLP and Spark ML. 
+                                            Achieved 95%+ accuracy across 50 logistic regression models to uncover user trends and engagement patterns.
+                                        </p>
+                                        <div class="project-tech">
+                                            <span class="tech-tag">Feature Engineering</span>
+                                            <span class="tech-tag">Spark ML</span>
+                                            <span class="tech-tag">Spark NLP</span>
+                                            <span class="tech-tag">EDA</span>
+                                            <span class="tech-tag">Big Data</span>
+                                            <span class="tech-tag">Visualization</span>
+                                            <span class="tech-tag">GCP</span>
+                                        </div>
+                                        <a href="https://github.com/missmathpati/Stackoverflow-NLP-Analysis" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Featured 4: AskADS -->
+                            <div class="carousel-slide">
+                                <div class="project-card featured-project">
+                                    <img src="images/Askads.png" alt="AskADS" class="project-image">
+                                    <div class="project-content">
+                                        <div style="display: flex; align-items: center; gap: var(--spacing-xs); margin-bottom: var(--spacing-xs);">
+                                            <span style="color: var(--accent-primary); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Featured</span>
+                                            <span style="color: var(--text-muted);">•</span>
+                                            <span style="color: var(--accent-secondary); font-family: var(--font-mono); font-size: 0.75rem;">RAG System</span>
+                                        </div>
+                                        <h3 class="project-title">AskADS</h3>
+                                        <p class="project-description">
+                                            A domain-specific conversational AI that retrieves and answers student queries using official Applied Data Science program documents through a grounded retrieval-augmented generation pipeline.
+                                        </p>
+                                        <div class="project-tech">
+                                            <span class="tech-tag">RAG</span>
+                                            <span class="tech-tag">LLMs</span>
+                                            <span class="tech-tag">LangChain</span>
+                                            <span class="tech-tag">Chroma</span>
+                                            <span class="tech-tag">FAISS</span>
+                                            <span class="tech-tag">SpaCy</span>
+                                            <span class="tech-tag">Streamlit</span>
+                                            <span class="tech-tag">FastAPI</span>
+                                        </div>
+                                        <a href="https://github.com/missmathpati/MS-ADS-BOT" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn carousel-btn-next" id="carousel-next" aria-label="Next project">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="carousel-dots" id="carousel-dots"></div>
+                </div>
+            </div>
+
+            <!-- All Other Projects -->
+            <div style="margin-top: var(--spacing-xl);">
+                <h2 style="font-family: var(--font-mono); color: var(--accent-primary); font-size: 1.5rem; margin-bottom: var(--spacing-md); border-bottom: 2px solid var(--border-color); padding-bottom: var(--spacing-sm);">
+                    All Projects
+                </h2>
+                <div class="project-grid">
+                    <!-- Ask-Lumi -->
+                    <div class="project-card">
+                        <img src="images/Lumi.png" alt="Ask-Lumi" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">Ask-Lumi</h3>
+                            <p class="project-description">
+                                A multimodal AI assistant combining retrieval-augmented generation with text and image embeddings to deliver accurate, grounded, context-aware responses across documents and visual content.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">RAG</span>
+                                <span class="tech-tag">LLMs</span>
+                                <span class="tech-tag">Multimodal AI</span>
+                                <span class="tech-tag">FAISS</span>
+                                <span class="tech-tag">Chroma</span>
+                                <span class="tech-tag">LangChain</span>
+                                <span class="tech-tag">Streamlit</span>
+                                <span class="tech-tag">FastAPI</span>
+                            </div>
+                            <a href="https://github.com/missmathpati/Ask-Lumi" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                        </div>
+                    </div>
+
+                    <!-- Law GPT -->
+                    <div class="project-card">
+                        <img src="images/LawGPT.jpg" alt="Law GPT" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">Law GPT</h3>
+                            <p class="project-description">
+                                AI-driven legal chatbot with multilingual support. Uses RAG and ChromaDB to answer Indian law queries 
+                                in simplified language.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">LLM</span>
+                                <span class="tech-tag">RAG</span>
+                                <span class="tech-tag">Ollama</span>
+                                <span class="tech-tag">ChromaDB</span>
+                                <span class="tech-tag">Voice Assistant</span>
+                                <span class="tech-tag">Multilingual Support</span>
+                            </div>
+                            <a href="https://www.kaggle.com/code/akankshamathpati8/lawgpt-api-akanksha" target="_blank" class="project-link btn btn-secondary">View on Kaggle</a>
+                        </div>
+                    </div>
+
+                    <!-- Smart AI Chat -->
+                    <div class="project-card">
+                        <img src="images/Smart AI CHat.jpg" alt="Smart AI Chat" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">Smart AI Chat</h3>
+                            <p class="project-description">
+                                Web tool to upload PDFs/CSVs and get instant answers using document QA pipeline. 
+                                Built with Streamlit and NLP libraries.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Document QA</span>
+                                <span class="tech-tag">PDF Parsing</span>
+                                <span class="tech-tag">Streamlit</span>
+                                <span class="tech-tag">Python</span>
+                            </div>
+                            <a href="https://github.com/missmathpati/Smart-AI-Chat-for-pdfs" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                        </div>
+                    </div>
+
+                    <!-- AI Industry Transformation -->
+                    <div class="project-card">
+                        <img src="images/NLP.png" alt="AI Industry Transformation" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">AI Industry Transformation</h3>
+                            <p class="project-description">
+                                Performed NLP on 200K+ AI-related articles from Goldman Sachs data to uncover AI impact across industries, 
+                                tracking trends, risks, and adoption success stories.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">NLP</span>
+                                <span class="tech-tag">Topic Modeling</span>
+                                <span class="tech-tag">BERT</span>
+                                <span class="tech-tag">EDA</span>
+                                <span class="tech-tag">Data Analysis</span>
+                                <span class="tech-tag">Visualization</span>
+                            </div>
+                            <a href="https://github.com/missmathpati/AI-Industry-Transformation" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                        </div>
+                    </div>
+
+                    <!-- Network Traffic Patterns -->
+                    <div class="project-card">
+                        <img src="images/ntp.jpg" alt="Network Traffic Patterns" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">Network Traffic Patterns</h3>
+                            <p class="project-description">
+                                Applied supervised and unsupervised ML (e.g., Isolation Forest) to detect malicious vs. benign network traffic 
+                                and identify anomalous behavior in cybersecurity data.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Feature Engineering</span>
+                                <span class="tech-tag">ML</span>
+                                <span class="tech-tag">Anomaly Detection</span>
+                                <span class="tech-tag">EDA</span>
+                                <span class="tech-tag">Data Analysis</span>
+                                <span class="tech-tag">Visualization</span>
+                            </div>
+                            <a href="https://github.com/missmathpati/Network-Traffic-Patterns" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                        </div>
+                    </div>
+
+                    <!-- FairHire -->
+                    <div class="project-card">
+                        <img src="images/Fairhire.jpg" alt="FairHire" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">FairHire</h3>
+                            <p class="project-description">
+                                An AI fairness auditing framework that evaluates bias in hiring models using statistical metrics and explainability techniques to support transparent, compliant, responsible automated decision-making.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Fairness</span>
+                                <span class="tech-tag">Bias Auditing</span>
+                                <span class="tech-tag">ML</span>
+                                <span class="tech-tag">XGBoost</span>
+                                <span class="tech-tag">Scikit-learn</span>
+                                <span class="tech-tag">Explainability</span>
+                                <span class="tech-tag">MLflow</span>
+                            </div>
+                            <a href="https://github.com/missmathpati/fairhire" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                        </div>
+                    </div>
+
+                    <!-- Job Recommendation System -->
+                    <div class="project-card">
+                        <img src="images/Job.jpg" alt="Job Recommendation System" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">Job Recommendation System</h3>
+                            <p class="project-description">
+                                Developed a job-resume matching engine using factorization-based recommendation models. 
+                                Matches top candidates to jobs and vice versa with high accuracy.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Recommender</span>
+                                <span class="tech-tag">NLP</span>
+                                <span class="tech-tag">ML</span>
+                                <span class="tech-tag">Factorization</span>
+                                <span class="tech-tag">Streamlit</span>
+                                <span class="tech-tag">Visualization</span>
+                            </div>
+                            <a href="https://github.com/missmathpati/Job-Recommendation-System" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                        </div>
+                    </div>
+
+                    <!-- Data Insights Lab -->
+                    <div class="project-card">
+                        <img src="images/DIL.jpg" alt="Data Insights Lab" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">Data Insights Lab</h3>
+                            <p class="project-description">
+                                Web app that lets users perform machine learning tasks like preprocessing, classification, regression, 
+                                and clustering without writing code.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Flask</span>
+                                <span class="tech-tag">ML</span>
+                                <span class="tech-tag">AutoML</span>
+                                <span class="tech-tag">Visualization</span>
+                            </div>
+                            <a href="https://github.com/missmathpati/Data-Insights-Lab-full-project" target="_blank" class="project-link btn btn-secondary">View on GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <a href="https://github.com/missmathpati/AI-Industry-Transformation" class="btn">View On GitHub</a>
-      </div>
+    </section>
 
-      <!-- Card 3 -->
-      <div class="project-card">
-        <img src="images/ntp.jpg" alt="Network Traffic Patterns">
-        <div class="card-content">
-          <h3>Network Traffic Patterns</h3>
-          <p>Applied supervised and unsupervised ML (e.g., Isolation Forest) to detect malicious vs. benign network traffic and identify anomalous behavior in cybersecurity data.</p>
-          <div class="tech-tags">
-            <span>Feature Engineering</span><span>ML</span><span>Anomaly Detection</span><span>EDA</span><span>Data Analysis</span><span>Visualization</span>
-          </div>
-        </div>
-        <a href="https://github.com/missmathpati/Network-Traffic-Patterns" class="btn">View On GitHub</a>
-      </div>
+    <script>
+        // Mobile Navigation Toggle
+        const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+        const navbarMenu = document.getElementById('navbar-menu');
+        
+        mobileNavToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navbarMenu.classList.toggle('active');
+        });
 
-      <!-- Card 4 -->
-      <div class="project-card">
-        <img src="images/Job.jpg" alt="Job Recommendation System">
-        <div class="card-content">
-          <h3>Job Recommendation System</h3>
-          <p>Developed a job-resume matching engine using factorization-based recommendation models. Matches top candidates to jobs and vice versa with high accuracy.</p>
-          <div class="tech-tags">
-            <span>Recommender</span><span>NLP</span><span>ML</span><span>Factorization</span><span>Streamlit</span><span>Visualization</span>
-          </div>
-        </div>
-        <a href="https://github.com/missmathpati/Job-Recommendation-System" class="btn">View On GitHub</a>
-      </div>
+        const navLinks = navbarMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNavToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+            });
+        });
 
-      <!-- Card 6 -->
-      <div class="project-card">
-        <img src="images/DIL.jpg" alt="Data Insights Lab">
-        <div class="card-content">
-          <h3>Data Insights Lab</h3>
-          <p>Web app that lets users perform machine learning tasks like preprocessing, classification, regression, and clustering without writing code.</p>
-          <div class="tech-tags">
-            <span>Python</span><span>Flask</span><span>ML</span><span>AutoML</span><span>Visualization</span>
-          </div>
-        </div>
-        <a href="https://github.com/missmathpati/Data-Insights-Lab-full-project" class="btn">View On GitHub</a>
-      </div>
+        document.addEventListener('click', function(event) {
+            if (!navbarMenu.contains(event.target) && !mobileNavToggle.contains(event.target)) {
+                mobileNavToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+            }
+        });
 
-      <!-- Card 7 -->
-      <div class="project-card">
-        <img src="images/MedsXplore.jpg" alt="MedsXplore">
-        <div class="card-content">
-          <h3>MedsXplore</h3>
-          <p>Users upload images of medications (pills/strips/syrups) and get back detailed medical info, powered by OCR and search APIs.</p>
-          <div class="tech-tags">
-            <span>OCR</span><span>Azure</span><span>Flask</span><span>Web App</span>
-          </div>
-        </div>
-        <a href="https://github.com/missmathpati/MedsXplore" class="btn">View On GitHub</a>
-      </div>
+        // Carousel Functionality
+        const carouselTrack = document.getElementById('carousel-track');
+        const carouselSlides = carouselTrack.querySelectorAll('.carousel-slide');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        const dotsContainer = document.getElementById('carousel-dots');
+        
+        let currentSlide = 0;
+        const totalSlides = carouselSlides.length;
+        let slidesToShow = window.innerWidth > 1200 ? 3 : window.innerWidth > 768 ? 2 : 1;
 
-      <!-- Card 8 -->
-      <div class="project-card">
-        <img src="images/LawGPT.jpg" alt="Law GPT">
-        <div class="card-content">
-          <h3>Law GPT</h3>
-          <p>AI-driven legal chatbot with multilingual support. Uses RAG and ChromaDB to answer Indian law queries in simplified language.</p>
-          <div class="tech-tags">
-            <span>LLM</span><span>RAG</span><span>Ollama</span><span>ChromaDB</span><span>Voice Assistant</span><span>Multiligual Support</span>
-          </div>
-        </div>
-        <a href="https://www.kaggle.com/code/akankshamathpati8/lawgpt-api-akanksha" class="btn">View On Kaggle</a>
-      </div>
+        // Update slides to show on resize
+        function updateSlidesToShow() {
+            slidesToShow = window.innerWidth > 1200 ? 3 : window.innerWidth > 768 ? 2 : 1;
+            updateCarousel();
+        }
 
-      <!-- Card 9 -->
-      <div class="project-card">
-        <img src="images/Cyberbullying.jpg" alt="Cyberbullying Amplification">
-        <div class="card-content">
-          <h3>Cyberbullying Amplification</h3>
-          <p>IEEE-published research paper on ML models detecting cyberbullying on Twitter and how tweet engagement metrics amplify it.</p>
-          <div class="tech-tags">
-            <span>Machine Learning</span><span>SVM</span><span>Naive Bayes</span><span>Twitter API</span>
-          </div>
-        </div>
-        <a href="https://ieeexplore.ieee.org/document/10463218" class="btn">View</a>
-      </div>
+        window.addEventListener('resize', updateSlidesToShow);
 
-      <!-- Card 10 -->
-      <div class="project-card">
-        <img src="images/Smart AI CHat.jpg" alt="Smart AI Chat">
-        <div class="card-content">
-          <h3>Smart AI Chat</h3>
-          <p>Web tool to upload PDFs/CSVs and get instant answers using document QA pipeline. Built with Streamlit and NLP libraries.</p>
-          <div class="tech-tags">
-            <span>Document QA</span><span>PDF Parsing</span><span>Streamlit</span><span>Python</span>
-          </div>
-        </div>
-        <a href="https://github.com/missmathpati/Smart-AI-Chat-for-pdfs" class="btn">View On GitHub</a>
-      </div>
+        // Create dots
+        carouselSlides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot';
+            if (index === 0) dot.classList.add('active');
+            dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
 
-    </div>
-  </section>
+        function updateCarousel() {
+            const maxSlide = Math.max(0, totalSlides - slidesToShow);
+            const slideWidth = 100 / slidesToShow;
+            const gapPercent = (parseFloat(getComputedStyle(carouselTrack).gap) / carouselTrack.offsetWidth) * 100;
+            const offset = -currentSlide * (slideWidth + gapPercent);
+            
+            carouselTrack.style.transform = `translateX(${offset}%)`;
+            
+            // Update active slides
+            carouselSlides.forEach((slide, index) => {
+                const isActive = index >= currentSlide && index < currentSlide + slidesToShow;
+                slide.classList.toggle('active', isActive);
+            });
+            
+            // Update dots
+            document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+            
+            // Update button states
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide >= maxSlide;
+        }
 
+        function goToSlide(index) {
+            const maxSlide = Math.max(0, totalSlides - slidesToShow);
+            currentSlide = Math.max(0, Math.min(index, maxSlide));
+            updateCarousel();
+        }
+
+        function nextSlide() {
+            const maxSlide = Math.max(0, totalSlides - slidesToShow);
+            if (currentSlide < maxSlide) {
+                currentSlide++;
+                updateCarousel();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateCarousel();
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carouselTrack.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        carouselTrack.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        // Initialize
+        updateCarousel();
+    </script>
 </body>
 </html>
-

@@ -3,498 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Card</title>
+    <title>Contact | Akanksha Mathpati</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;600&display=swap');
-        
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: black;
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Animated background particles */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 165, 0, 0.06) 0%, transparent 50%);
-            animation: float 25s ease-in-out infinite;
-            z-index: 0;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-15px) rotate(0.5deg); }
-            66% { transform: translateY(8px) rotate(-0.5deg); }
-        }
-
-        /* Floating particles effect */
-        .particles {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px; height: 2px;
-            background-color: rgba(255, 165, 0, 0.3);
-            border-radius: 50%;
-            animation: float-particle 15s linear infinite;
-        }
-
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
-        .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
-        .particle:nth-child(4) { left: 40%; animation-delay: 6s; }
-        .particle:nth-child(5) { left: 50%; animation-delay: 8s; }
-        .particle:nth-child(6) { left: 60%; animation-delay: 10s; }
-        .particle:nth-child(7) { left: 70%; animation-delay: 12s; }
-        .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
-
-        @keyframes float-particle {
-            0% { top: 100%; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: -10px; opacity: 0; }
-        }
-
-        /* Back to Home Button */
-        .back-home {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid orange;
-            border-radius: 8px;
-            padding: 10px 15px;
-            color: orange;
-            text-decoration: none;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            font-size: 0.9rem;
-        }
-
-        .back-home:hover {
-            background: rgba(255, 165, 0, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
-        }
-
-        .card {
-            background: rgba(20, 20, 20, 0.85);
-            border: 1px solid rgba(0, 255, 174, 0.2);
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
-            position: relative;
-            z-index: 2;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            animation: fadeInUp 1s ease-out;
-            max-width: 90vw;
-            width: 400px;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, #00ffae, #ff8c00);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            background: rgba(30, 30, 30, 0.9);
-            border-color: rgba(0, 255, 174, 0.4);
-            box-shadow: 0 15px 35px rgba(0, 255, 174, 0.2);
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card img {
-            height: 60px;
-            width: 60px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            filter: brightness(0) invert(1);
-            opacity: 0.8;
-        }
-
-        .card img:hover {
-            transform: scale(1.05);
-            opacity: 1;
-            filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(140deg);
-        }
-
-        h2 {
-            color: #ff8c00;
-            margin: 1rem 0;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-            font-weight: 600;
-            font-size: 1.5rem;
-            text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 5px rgba(255, 165, 0, 0.5); }
-            to { text-shadow: 0 0 20px rgba(255, 165, 0, 0.8); }
-        }
-
-        p {
-            color: #ccc;
-            margin: 0 0 1.5rem;
-            font-size: 1.1rem;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-            letter-spacing: 0.5px;
-        }
-
-        p span {
-            color: #00ffae;
-            transition: color 0.3s ease;
-            font-weight: 500;
-        }
-
-        ul {
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            margin: 0;
-            gap: 1rem;
-        }
-
-        ul li {
-            list-style: none;
-            height: 50px;
-            width: 50px;
-            color: #00ffae;
-            border: 1px solid rgba(0, 255, 174, 0.3);
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            background: rgba(0, 255, 174, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        ul li::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        ul li:hover {
-            color: #000000;
-            background: #00ffae;
-            cursor: pointer;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 255, 174, 0.3);
-            border-color: #00ffae;
-        }
-
-        ul li:hover::before {
-            left: 100%;
-        }
-
-        ul li a {
-            color: inherit;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-        }
-
-        .fa-brands {
-            color: inherit;
-            transition: color 0.3s ease;
-            z-index: 1;
-            position: relative;
-        }
-
-        /* Responsive Design - Mobile First */
-        @media (max-width: 768px) {
-            body {
-                height: auto;
-                min-height: 100vh;
-                padding: 20px;
-                align-items: flex-start;
-                padding-top: 80px;
-            }
-
-            .back-home {
-                top: 15px;
-                left: 15px;
-                padding: 8px 12px;
-                font-size: 0.8rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-                width: 100%;
-                max-width: 350px;
-                margin: 0 auto;
-            }
-
-            .card img {
-                height: 50px;
-                width: 50px;
-            }
-
-            h2 {
-                font-size: 1.3rem;
-                margin: 0.8rem 0;
-            }
-
-            p {
-                font-size: 1rem;
-                margin: 0 0 1.2rem;
-            }
-
-            ul {
-                gap: 0.8rem;
-            }
-
-            ul li {
-                height: 45px;
-                width: 45px;
-                font-size: 1.1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 15px;
-                padding-top: 70px;
-            }
-
-            .back-home {
-                top: 10px;
-                left: 10px;
-                padding: 6px 10px;
-                font-size: 0.75rem;
-            }
-
-            .card {
-                padding: 1.2rem;
-                max-width: 320px;
-            }
-
-            .card img {
-                height: 45px;
-                width: 45px;
-            }
-
-            h2 {
-                font-size: 1.2rem;
-                margin: 0.6rem 0;
-            }
-
-            p {
-                font-size: 0.9rem;
-                margin: 0 0 1rem;
-            }
-
-            ul {
-                gap: 0.6rem;
-            }
-
-            ul li {
-                height: 40px;
-                width: 40px;
-                font-size: 1rem;
-            }
-        }
-
-        /* Tablet Adjustments */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .card {
-                padding: 1.8rem;
-                width: 450px;
-            }
-
-            .card img {
-                height: 65px;
-                width: 65px;
-            }
-
-            h2 {
-                font-size: 1.6rem;
-            }
-
-            p {
-                font-size: 1.15rem;
-            }
-
-            ul li {
-                height: 55px;
-                width: 55px;
-                font-size: 1.3rem;
-            }
-        }
-
-        /* Large Screen Optimizations */
-        @media (min-width: 1025px) {
-            .card {
-                padding: 2.5rem;
-                width: 500px;
-            }
-
-            .card img {
-                height: 70px;
-                width: 70px;
-            }
-
-            h2 {
-                font-size: 1.8rem;
-            }
-
-            p {
-                font-size: 1.2rem;
-            }
-
-            ul li {
-                height: 60px;
-                width: 60px;
-                font-size: 1.4rem;
-            }
-        }
-
-        /* Landscape Mobile Adjustments */
-        @media (max-height: 500px) and (orientation: landscape) {
-            body {
-                padding: 15px;
-                padding-top: 60px;
-                align-items: flex-start;
-            }
-
-            .card {
-                padding: 1rem;
-                max-width: 300px;
-            }
-
-            .card img {
-                height: 40px;
-                width: 40px;
-            }
-
-            h2 {
-                font-size: 1.1rem;
-                margin: 0.5rem 0;
-            }
-
-            p {
-                font-size: 0.85rem;
-                margin: 0 0 0.8rem;
-            }
-
-            ul {
-                gap: 0.5rem;
-            }
-
-            ul li {
-                height: 35px;
-                width: 35px;
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Touch Device Optimizations */
-        @media (hover: none) and (pointer: coarse) {
-            .card:hover {
-                transform: none;
-            }
-
-            .card img:hover {
-                transform: none;
-            }
-
-            ul li:hover {
-                transform: none;
-            }
-
-            .back-home:hover {
-                transform: none;
-            }
-        }
-
-        /* High DPI Displays */
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .card {
-                box-shadow: 0 2px 20px 0 rgba(0,0,0,0.25);
-            }
-        }
-    </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">&lt;AM/&gt;</a>
+            <ul class="navbar-menu" id="navbar-menu">
+                <li><a href="About.html" class="navbar-link">About</a></li>
+                <li><a href="skills.html" class="navbar-link">Experience</a></li>
+                <li><a href="projects.html" class="navbar-link">Projects</a></li>
+                <li><a href="contact.html" class="navbar-link">Contact</a></li>
+            </ul>
+            <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
     <!-- Back to Home Button -->
     <a href="index.html" class="back-home">← Home</a>
 
-    <!-- Floating particles -->
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
+    <!-- Contact Section -->
+    <section class="section" style="margin-top: 80px; min-height: calc(100vh - 80px); display: flex; align-items: center;">
+        <div class="container">
+            <h1 class="section-title">Get In Touch</h1>
+            <p class="section-subtitle">Let's connect and discuss opportunities</p>
 
-    <div class="card">
-        <img src="images/icons/icons8-email-96.png" alt="Mail Icon">
-        <h2>Get In Touch</h2>
-        <p><span>akankshamathpati@uchicago.edu</span></p>
-        <ul>
-            <li><a href="https://github.com/missmathpati" target="_blank"><i class="fa-brands fa-github"></i></a></li>
-            <li><a href="https://www.linkedin.com/in/akanksha-a-mathpati/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
-        </ul>
-    </div>
+            <div class="card" style="max-width: 500px; margin: 0 auto; text-align: center;">
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <i class="fas fa-envelope" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: var(--spacing-md);"></i>
+                </div>
+                <h2 style="color: var(--accent-primary); font-family: var(--font-mono); margin-bottom: var(--spacing-md); font-size: 1.5rem;">
+                    Contact Me
+                </h2>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: var(--spacing-lg); font-family: var(--font-mono);">
+                    <a href="mailto:akankshamathpati@uchicago.edu" style="color: var(--accent-secondary); text-decoration: none;">
+                        akankshamathpati8@gmail.com
+                    </a>
+                </p>
+                <div style="display: flex; justify-content: center; gap: var(--spacing-md); margin-top: var(--spacing-xl);">
+                    <a href="https://github.com/missmathpati" target="_blank" 
+                       style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; 
+                              border: 1px solid var(--border-color); border-radius: 8px; 
+                              color: var(--accent-primary); transition: all var(--transition-base);
+                              background: rgba(0, 217, 255, 0.05);">
+                        <i class="fab fa-github" style="font-size: 1.5rem;"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/akanksha-a-mathpati/" target="_blank"
+                       style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; 
+                              border: 1px solid var(--border-color); border-radius: 8px; 
+                              color: var(--accent-primary); transition: all var(--transition-base);
+                              background: rgba(0, 217, 255, 0.05);">
+                        <i class="fab fa-linkedin-in" style="font-size: 1.5rem;"></i>
+                    </a>
+                </div>
+                <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-lg); border-top: 1px solid var(--border-color);">
+                    <a href="Akanksha Mathpati Resume .pdf" download class="btn btn-primary" style="width: 100%;">
+                        Download Resume
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile Navigation Toggle
+        const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+        const navbarMenu = document.getElementById('navbar-menu');
+        
+        mobileNavToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navbarMenu.classList.toggle('active');
+        });
+
+        const navLinks = navbarMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNavToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!navbarMenu.contains(event.target) && !mobileNavToggle.contains(event.target)) {
+                mobileNavToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+            }
+        });
+
+        // Add hover effects for social icons
+        document.querySelectorAll('a[href*="github"], a[href*="linkedin"]').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.background = 'var(--accent-primary)';
+                this.style.color = 'var(--bg-primary)';
+                this.style.borderColor = 'var(--accent-primary)';
+                this.style.transform = 'translateY(-2px)';
+            });
+            link.addEventListener('mouseleave', function() {
+                this.style.background = 'rgba(0, 217, 255, 0.05)';
+                this.style.color = 'var(--accent-primary)';
+                this.style.borderColor = 'var(--border-color)';
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
 </body>
 </html>
-

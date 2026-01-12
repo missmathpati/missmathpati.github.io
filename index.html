@@ -3,254 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akanksha Mathpati | ML Engineer & Data Scientist</title>
     <link rel="stylesheet" href="style.css">
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <title>Akanksha Mathpati</title>
-    <style>
-        :root {
-    --primary-color: orange;
-    --gradient-color: linear-gradient(180deg, #d2ff00 0%, #00d2ff 100%);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Space Grotesk", sans-serif;
-    background-color: #000000;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Animated background particles */
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(255, 165, 0, 0.06) 0%, transparent 50%);
-    animation: float 25s ease-in-out infinite;
-    z-index: 0;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33% { transform: translateY(-15px) rotate(0.5deg); }
-    66% { transform: translateY(8px) rotate(-0.5deg); }
-}
-
-
-
-/* Floating particles effect */
-.particles {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.particle {
-    position: absolute;
-    width: 2px; height: 2px;
-    background-color: rgba(255, 165, 0, 0.3);
-    border-radius: 50%;
-    animation: float-particle 15s linear infinite;
-}
-
-.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-.particle:nth-child(2) { left: 20%; animation-delay: 2s; }
-.particle:nth-child(3) { left: 30%; animation-delay: 4s; }
-.particle:nth-child(4) { left: 40%; animation-delay: 6s; }
-.particle:nth-child(5) { left: 50%; animation-delay: 8s; }
-.particle:nth-child(6) { left: 60%; animation-delay: 10s; }
-.particle:nth-child(7) { left: 70%; animation-delay: 12s; }
-.particle:nth-child(8) { left: 80%; animation-delay: 14s; }
-
-@keyframes float-particle {
-    0% { top: 100%; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { top: -10px; opacity: 0; }
-}
-
-.typewriter-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-h1.type {
-    color: orange;
-    background: -webkit-linear-gradient(25deg, #eee, #333);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 3rem;
-    font-weight: 500;
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 2px solid;
-    animation: type 1.5s steps(90) 1.5s 1 normal both, cursor 1s step-end infinite;
-    position: relative;
-}
-
-@keyframes type {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes cursor {
-    50% {
-        border-color: transparent;
-    }
-}
-
-    </style>
 </head>
 <body>
-
-
-  <!-- Floating particles -->
-  <div class="particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-  </div>
-
-<div class="typewriter-container">
-    <div class="typewriter">
-        <h1 class="type">Akanksha Mathpati</h1>
-    </div>
-</div>
-
-<!-- Mobile Navigation Toggle -->
-<div class="mobile-nav-toggle" id="mobile-nav-toggle">
-    <div class="hamburger"></div>
-    <div class="hamburger"></div>
-    <div class="hamburger"></div>
-</div>
-
-<div class="container hero-image" id="main-content" style="display: none;">
-    <div class="hero-image-overlay">
-        <nav id="main-nav">
-            <h1>Akanksha Mathpati</h1>
-            <span class="chevron">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve" width="24" height="24" class="hovered-paths">
-                    <g>
-                        <g>
-                            <g>
-                                <polygon points="225.813,48.907 128,146.72 30.187,48.907 0,79.093 128,207.093 256,79.093" data-original="#000000" class="hovered-path active-path" style="fill:#FFFFFF" data-old_color="#000000"></polygon>
-                            </g>
-                        </g>
-                    </g>
-                </svg>
-            </span>
-            <ul class="main">
-                <li>
-                    <a href="About.html">About</a>
-                </li>
-                <li>
-                    <a href="#">Experience</a>
-                    <ul class="sub-menu">
-                        <li>
-                           
-                        </li> <a href="Resumes/Akanksha Mathpati Resume.pdf" download>Download CV</a>
-                        <li>
-                            <a href="skills.html">Background</a>
-                        </li>
-                        <li>
-                            <a href="projects.html">View Projects</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="contact.html">Contact Me!</a>
-                </li>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">&lt;AM/&gt;</a>
+            <ul class="navbar-menu" id="navbar-menu">
+                <li><a href="About.html" class="navbar-link">About</a></li>
+                <li><a href="skills.html" class="navbar-link">Experience</a></li>
+                <li><a href="projects.html" class="navbar-link">Projects</a></li>
+                <li><a href="contact.html" class="navbar-link">Contact</a></li>
             </ul>
-        </nav>
-    </div>
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Check if it's the first time loading the page
-        var isFirstLoad = sessionStorage.getItem('isFirstLoad');
-        
-        if (!isFirstLoad) {
-            // Show typewriter animation for 3 seconds (adjust timing as needed)
-            setTimeout(function() {
-                document.querySelector(".typewriter-container").style.display = 'none';
-                document.getElementById("main-content").style.display = 'block';
-            }, 3000); // Duration of the typewriter animation (1.5s typing + 1.5s delay)
+            <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
-            // Set session storage to indicate first load
-            sessionStorage.setItem('isFirstLoad', true);
-        } else {
-            // If not the first load, directly show the main content
-            document.querySelector(".typewriter-container").style.display = 'none';
-            document.getElementById("main-content").style.display = 'block';
-        }
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-greeting">Hi, my name is</p>
+            <h1 class="hero-name">Akanksha Mathpati.</h1>
+            <h2 class="hero-title">I build intelligent systems with ML & AI.</h2>
+            <p class="hero-description">
+                I'm a Machine Learning Engineer and Data Scientist specializing in LLMs, RAG systems, 
+                and end-to-end ML pipelines. Currently building AI solutions at University of Chicago 
+                and working on cutting-edge projects in NLP and data engineering.
+            </p>
+            <div class="hero-cta">
+                <a href="projects.html" class="btn btn-primary">View Projects</a>
+                <a href="contact.html" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
 
+    <!-- Quick Links Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Quick Links</h2>
+            <div class="project-grid">
+                <a href="About.html" class="card" style="text-decoration: none; display: block;">
+                    <div class="card-header">
+                        <h3 class="card-title">About Me</h3>
+                        <p class="card-subtitle">Learn more about my background</p>
+                    </div>
+                    <div class="card-body">
+                        <p>Experienced ML Engineer with expertise in LLMs, RAG, and data pipelines. 
+                        Currently pursuing MS in Applied Data Science at University of Chicago.</p>
+                    </div>
+                </a>
+                
+                <a href="projects.html" class="card" style="text-decoration: none; display: block;">
+                    <div class="card-header">
+                        <h3 class="card-title">Projects</h3>
+                        <p class="card-subtitle">Explore my work</p>
+                    </div>
+                    <div class="card-body">
+                        <p>From NLP analysis on 30GB datasets to RAG-powered AI systems. 
+                        Check out my latest projects and contributions.</p>
+                    </div>
+                </a>
+                
+                <a href="skills.html" class="card" style="text-decoration: none; display: block;">
+                    <div class="card-header">
+                        <h3 class="card-title">Experience & Skills</h3>
+                        <p class="card-subtitle">Technical expertise</p>
+                    </div>
+                    <div class="card-body">
+                        <p>Professional experience at Blue AI Labs, University of Chicago, 
+                        and technical skills in Python, ML, NLP, and cloud technologies.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="padding: var(--spacing-xl) 0; border-top: 1px solid var(--border-color); margin-top: var(--spacing-xl);">
+        <div class="container text-center">
+            <p style="color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem;">
+                Built with &lt;3 by Akanksha Mathpati
+            </p>
+            <div style="margin-top: var(--spacing-sm); display: flex; justify-content: center; gap: var(--spacing-md);">
+                <a href="https://github.com/missmathpati" target="_blank" style="color: var(--text-muted); transition: color var(--transition-base);">
+                    GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/akanksha-a-mathpati/" target="_blank" style="color: var(--text-muted); transition: color var(--transition-base);">
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
         // Mobile Navigation Toggle
         const mobileNavToggle = document.getElementById('mobile-nav-toggle');
-        const mainNav = document.getElementById('main-nav');
+        const navbarMenu = document.getElementById('navbar-menu');
         
         mobileNavToggle.addEventListener('click', function() {
             this.classList.toggle('active');
-            mainNav.classList.toggle('active');
+            navbarMenu.classList.toggle('active');
         });
 
         // Close mobile nav when clicking on a link
-        const navLinks = mainNav.querySelectorAll('a');
+        const navLinks = navbarMenu.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 mobileNavToggle.classList.remove('active');
-                mainNav.classList.remove('active');
+                navbarMenu.classList.remove('active');
             });
         });
 
         // Close mobile nav when clicking outside
         document.addEventListener('click', function(event) {
-            if (!mainNav.contains(event.target) && !mobileNavToggle.contains(event.target)) {
+            if (!navbarMenu.contains(event.target) && !mobileNavToggle.contains(event.target)) {
                 mobileNavToggle.classList.remove('active');
-                mainNav.classList.remove('active');
+                navbarMenu.classList.remove('active');
             }
         });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                mobileNavToggle.classList.remove('active');
-                mainNav.classList.remove('active');
-            }
-        });
-    });
-</script>
-<!--
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        setTimeout(function() {
-            document.querySelector(".typewriter-container").style.display = 'none';
-            document.getElementById("main-content").style.display = 'block';
-        }, 3000); // Duration of the typewriter animation (1.5s typing + 1.5s delay)
-    });
-</script>-->
-
+    </script>
 </body>
 </html>
